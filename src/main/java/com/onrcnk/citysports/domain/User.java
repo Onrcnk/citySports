@@ -26,7 +26,10 @@ public class User {
     private String name;
     private String surname;
     private String birthDate;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
     private Byte[] image;
 
