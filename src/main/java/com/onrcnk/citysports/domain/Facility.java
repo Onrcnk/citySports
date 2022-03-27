@@ -28,12 +28,15 @@ public class Facility {
     @ManyToOne
     private SportsCenter sportsCenter;
 
-    @OneToOne
-    private FacilityScore facilityScore;
+    @OneToMany
+    private Set<FacilityScore> facilityScoreSet = new HashSet<>();
 
     @OneToMany
     private Set<Comment> commentSet = new HashSet<>();
 
-    @OneToOne
-    private Branch branch;
+    @ManyToMany(mappedBy = "facility")
+    private Set<Branch> branchSet;
+
+    @OneToMany
+    private Set<Reservation> reservationSet = new HashSet<>();
 }

@@ -42,7 +42,7 @@ public class User {
     @OneToMany
     private Set<Reservation> reservationSet = new HashSet<>();
 
-    @OneToOne
-    private FacilityScore facilityScore;
+    @OneToMany
+    private Set<FacilityScore> facilityScoreSet = new HashSet<>();
 
 }

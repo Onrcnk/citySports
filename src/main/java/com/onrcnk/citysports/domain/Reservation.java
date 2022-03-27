@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 
@@ -21,9 +22,12 @@ public class Reservation {
     @Column(updatable = false, nullable = false)
     private String reservationId;
 
-    @OneToOne
+    @ManyToOne
     private Facility facility;
 
-    @OneToOne
+    @ManyToOne
     private User user;
+
+    @OneToOne
+    private Cart cart;
 }

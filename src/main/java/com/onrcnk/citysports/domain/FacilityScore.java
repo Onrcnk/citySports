@@ -7,9 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
-import java.util.HashSet;
 
 @Getter
 @Setter
@@ -24,12 +22,12 @@ public class FacilityScore {
     @Column(updatable = false, nullable = false)
     private String facilityScoreId;
 
-    private BigDecimal score;
+    private BigDecimal userFacilityScore;
 
     @ManyToOne
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Facility facility;
 
 }

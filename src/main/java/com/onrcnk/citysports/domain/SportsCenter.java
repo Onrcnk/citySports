@@ -23,7 +23,7 @@ public class SportsCenter {
     @Column(updatable = false, nullable = false)
     private String sportsCenterId;
 
-    private String name;
+    private String sportsCenterName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sportsCenter")
     private Set<Facility> facilities = new HashSet<>();

@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,8 +21,8 @@ public class Cart {
     @Column(updatable = false, nullable = false)
     private String cartId;
 
-    @OneToMany
-    private Set<Reservation> reservationSet = new HashSet<>();
+    @OneToOne
+    private Reservation reservation;
 
     @OneToOne
     private User user;

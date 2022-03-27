@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,10 +23,12 @@ public class Branch {
     @Column(updatable = false, nullable = false)
     private String branchId;
 
-    private String description;
+    private String branchName;
 
-    @ManyToOne
-    private Facility facility;
-
+    @ManyToMany
+    @JoinTable(name = "branch_facility",
+            joinColumns = @JoinColumn(name = "branch_id"),
+            inverseJoinColumns = @JoinColumn(name = "facility_id"))
+    private Set<Facility> facility = new HashSet<>();
 
 }
