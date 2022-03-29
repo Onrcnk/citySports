@@ -26,7 +26,7 @@ public class Facility {
     private String facilityName;
 
     @ManyToOne
-    private SportsCenter sportsCenter;
+    private SportCenter sportsCenter;
 
     @OneToMany
     private Set<FacilityScore> facilityScoreSet = new HashSet<>();

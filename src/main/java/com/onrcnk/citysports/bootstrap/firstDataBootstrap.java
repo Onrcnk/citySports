@@ -2,7 +2,7 @@ package com.onrcnk.citysports.bootstrap;
 
 import com.onrcnk.citysports.domain.Branch;
 import com.onrcnk.citysports.domain.Facility;
-import com.onrcnk.citysports.domain.SportsCenter;
+import com.onrcnk.citysports.domain.SportCenter;
 import com.onrcnk.citysports.domain.User;
 import com.onrcnk.citysports.repositories.BranchRepository;
 import com.onrcnk.citysports.repositories.FacilityRepository;
@@ -18,13 +18,13 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
     private final FacilityRepository facilityRepository;
-    private final SportCenterRepository sportsCenterRepository;
+    private final SportCenterRepository sportCenterRepository;
 
     public firstDataBootstrap(UserRepository userRepository, BranchRepository branchRepository, FacilityRepository facilityRepository, SportCenterRepository sportsCenterRepository) {
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
         this.facilityRepository = facilityRepository;
-        this.sportsCenterRepository = sportsCenterRepository;
+        this.sportCenterRepository = sportsCenterRepository;
     }
 
     @Override
@@ -58,9 +58,9 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         onurcan.setEmail("kurt.onurcan@hotmail.com");
         onurcan.setBirthDate("10.09.1993");
 
-        SportsCenter izmir = new SportsCenter();
-        SportsCenter istanbul = new SportsCenter();
-        SportsCenter samsun = new SportsCenter();
+        SportCenter izmir = new SportCenter();
+        SportCenter istanbul = new SportCenter();
+        SportCenter samsun = new SportCenter();
 
         Branch basketball = new Branch();
         Branch volleyball = new Branch();
@@ -82,9 +82,9 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         volleyball.setBranchName("Volleyball");
         basketball.setBranchName("Basketball");
 
-        izmir.setSportsCenterName("Izmir Sports Center");
-        istanbul.setSportsCenterName("Istanbul Sports Center");
-        samsun.setSportsCenterName("Samsun Sports Center");
+        izmir.setSportCenterName("Izmir Sports Center");
+        istanbul.setSportCenterName("Istanbul Sports Center");
+        samsun.setSportCenterName("Samsun Sports Center");
 
         footballField.setFacilityName("Istanbul Football Field");
         footballField.setSportsCenter(istanbul);
@@ -107,9 +107,9 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         tennisCourt2.setFacilityName("Izmir Tennis Court");
         tennisCourt2.setSportsCenter(izmir);
 
-        sportsCenterRepository.save(izmir);
-        sportsCenterRepository.save(istanbul);
-        sportsCenterRepository.save(samsun);
+        sportCenterRepository.save(izmir);
+        sportCenterRepository.save(istanbul);
+        sportCenterRepository.save(samsun);
 
         facilityRepository.save(multiFunctionalFacility);
         facilityRepository.save(tennisCourt);

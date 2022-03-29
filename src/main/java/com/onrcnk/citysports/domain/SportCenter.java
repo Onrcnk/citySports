@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SportsCenter {
+public class SportCenter {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -23,7 +23,7 @@ public class SportsCenter {
     @Column(updatable = false, nullable = false)
     private String sportsCenterId;
 
-    private String sportsCenterName;
+    private String sportCenterName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sportsCenter")
     private Set<Facility> facilities = new HashSet<>();
