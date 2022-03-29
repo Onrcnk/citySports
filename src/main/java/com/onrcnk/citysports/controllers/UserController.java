@@ -15,6 +15,6 @@ public class UserController {
     @RequestMapping("/usersingup")
     public String singUp(){
 
-        return "usersingup";
+        return "usersignup";
     }
 }

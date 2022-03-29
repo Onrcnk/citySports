@@ -1,6 +1,7 @@
 package com.onrcnk.citysports.controllers;
 
-import com.onrcnk.citysports.domain.Facility;
+import com.onrcnk.citysports.commands.FacilityCommand;
+import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.services.FacilityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,17 +15,20 @@ import java.util.Set;
 public class FacilityController {
 
     private final FacilityService facilityService;
+    private final FacilityRepository facilityRepository;
 
-    public FacilityController(FacilityService facilityService) {
+    public FacilityController(FacilityService facilityService, FacilityRepository facilityRepository) {
         this.facilityService = facilityService;
+        this.facilityRepository = facilityRepository;
     }
 
     @RequestMapping("/facilities")
     public String getFacilityList(Model model){
 
-        Set<Facility> facilitySet = facilityService.getFacilities();
+        Set<FacilityCommand> facilitySet = facilityService.getFacilities();
         model.addAttribute("facilities", facilitySet);
 
         return "showfacilities";
     }
+
 }
