@@ -25,7 +25,7 @@ public class FacilityToFacilityCommand implements Converter<Facility, FacilityCo
         facilityCommand.setFacilityName(source.getFacilityName());
 
         for(Branch branch : source.getBranchSet()){
-            facilityCommand.setBranchNames((facilityCommand.getBranchNames().isEmpty() ? "" : facilityCommand.getBranchNames() + " : " )+ branch.getBranchName());
+            facilityCommand.setBranchNames((facilityCommand.getBranchNames().isEmpty() ? "" : facilityCommand.getBranchNames() + " : " ) + branch.getBranchName());
         }
 
         return facilityCommand;

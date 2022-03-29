@@ -6,7 +6,7 @@ import com.onrcnk.citysports.domain.SportsCenter;
 import com.onrcnk.citysports.domain.User;
 import com.onrcnk.citysports.repositories.BranchRepository;
 import com.onrcnk.citysports.repositories.FacilityRepository;
-import com.onrcnk.citysports.repositories.SportsCenterRepository;
+import com.onrcnk.citysports.repositories.SportCenterRepository;
 import com.onrcnk.citysports.repositories.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -18,9 +18,9 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
     private final FacilityRepository facilityRepository;
-    private final SportsCenterRepository sportsCenterRepository;
+    private final SportCenterRepository sportsCenterRepository;
 
-    public firstDataBootstrap(UserRepository userRepository, BranchRepository branchRepository, FacilityRepository facilityRepository, SportsCenterRepository sportsCenterRepository) {
+    public firstDataBootstrap(UserRepository userRepository, BranchRepository branchRepository, FacilityRepository facilityRepository, SportCenterRepository sportsCenterRepository) {
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
         this.facilityRepository = facilityRepository;
