@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface SportCenterRepository extends JpaRepository<SportCenter, String> {
-    public List<SportCenter> findAllByOrderBySportCenterNameAsc();
+    //List<SportCenter> findAllByOrderBySportsCenterAsc();
 }

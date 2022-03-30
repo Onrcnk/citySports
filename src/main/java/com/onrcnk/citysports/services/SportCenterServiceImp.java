@@ -15,21 +15,25 @@ import java.util.Set;
 @Service
 public class SportCenterServiceImp implements SportCenterService{
 
-    SportCenterRepository sportCenterRepository;
-    SportCenterToSportCenterCommand sportCenterToSportCenterCommand;
+    private final SportCenterRepository sportCenterRepository;
+    private final SportCenterToSportCenterCommand sportCenterToSportCenterCommand;
 
+    public SportCenterServiceImp(SportCenterRepository sportCenterRepository, SportCenterToSportCenterCommand sportCenterToSportCenterCommand) {
+        this.sportCenterRepository = sportCenterRepository;
+        this.sportCenterToSportCenterCommand = sportCenterToSportCenterCommand;
+    }
 
     @Override
     public Set<SportCenterCommand> getSportCenter() {
 
-        Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
-        List<SportCenter> sportCenters = sportCenterRepository.findAllByOrderBySportCenterNameAsc();
+//        Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
+//        List<SportCenter> sportCenters = sportCenterRepository.findAllByOrderBySportsCenterAsc();
+//
+//        for(SportCenter sportCenter : sportCenters){
+//            sportCenterCommands.add(sportCenterToSportCenterCommand.convert(sportCenter));
+//        }
 
-        for(SportCenter sportCenter : sportCenters){
-            sportCenterCommands.add(sportCenterToSportCenterCommand.convert(sportCenter));
-        }
-
-        return sportCenterCommands;
+        return null;
 
     }
 }

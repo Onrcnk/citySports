@@ -28,14 +28,16 @@ public class SportCenterController {
 
     @RequestMapping("/sportcenters")
     public String getSportCenterPage(Model model){
+        Set<SportCenterCommand> sportCenterCommandSet = facilityService.getFacilitiesFromSportCenter();
+        model.addAttribute("sportCenters", sportCenterCommandSet);
 
-        return "showsportcenters";
+        return "sportcenter/showsportcenters";
     }
 
-    @RequestMapping("/sportcenter/{facilityId}/list")
-    public String getFacilityList(@PathVariable String facilityId, Model model){
+    @RequestMapping("/sportcenter/{sportCenterId}/list")
+    public String getFacilityList(@PathVariable String sportCenterId, Model model){
 
-        Set<SportCenterCommand> sportCenterCommandSet = sportCenterService.getSportCenter();
+        Set<SportCenterCommand> sportCenterCommandSet = facilityService.getFacilitiesFromSportCenter();
         model.addAttribute("sportCenters", sportCenterCommandSet);
         return "sportcenter/facilitieslist";
     }

@@ -22,11 +22,7 @@ public class SportCenterToSportCenterCommand implements Converter<SportCenter, S
         final SportCenterCommand sportCenterCommand = new SportCenterCommand();
 
         sportCenterCommand.setId(source.getSportsCenterId());
-        sportCenterCommand.setFacilityName(source.getSportCenterName());
-
-        for (Facility facility : source.getFacilities()) {
-            sportCenterCommand.setFacilityNames((sportCenterCommand.getFacilityNames().isEmpty() ? "" : sportCenterCommand.getFacilityNames() + " : ") + facility.getFacilityName());
-        }
+        sportCenterCommand.setSportCenterName(source.getSportCenterName());
 
         return sportCenterCommand;
     }
