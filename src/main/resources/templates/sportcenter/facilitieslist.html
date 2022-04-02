@@ -67,12 +67,12 @@
 
 <div class="row">
     <div class="col-2"></div>
-    <tr th:each="sportCenter : ${sportCenters}">
+    <tr th:each="facility : ${facilities}">
     <div class="card" style="width: 18rem;">
         <img src="../../static/images/tennis_court.jpg" th:src="@{/images/tennis_court.jpg}" class="card-img-top" alt="Tennis_Court" style="width: 300px; height: 250px">
         <div class="card-body">
             <figure class="text-center">
-                <h5 class="card-title" th:text="${sportCenter.getFacilityName()}">Tennis Court</h5>
+                <h5 class="card-title" th:text="${facility.facilityName}">Tennis Court</h5>
             </figure>
             <p class="card-text">This is one of the most popular elite games. Take your place, quickly !</p>
             <div class="d-grid col-10 mx-auto">

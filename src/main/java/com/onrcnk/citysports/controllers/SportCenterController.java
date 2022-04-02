@@ -1,5 +1,6 @@
 package com.onrcnk.citysports.controllers;
 
+import com.onrcnk.citysports.commands.FacilityCommand;
 import com.onrcnk.citysports.commands.SportCenterCommand;
 import com.onrcnk.citysports.repositories.SportCenterRepository;
 import com.onrcnk.citysports.services.FacilityService;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -28,17 +30,17 @@ public class SportCenterController {
 
     @RequestMapping("/sportcenters")
     public String getSportCenterPage(Model model){
-        Set<SportCenterCommand> sportCenterCommandSet = facilityService.getFacilitiesFromSportCenter();
+        Set<SportCenterCommand> sportCenterCommandSet = sportCenterService.getAllSportCenter();
         model.addAttribute("sportCenters", sportCenterCommandSet);
 
         return "sportcenter/showsportcenters";
     }
 
-    @RequestMapping("/sportcenter/{sportCenterId}/list")
+    @RequestMapping("/sportcenters/{sportCenterId}/list")
     public String getFacilityList(@PathVariable String sportCenterId, Model model){
 
-        Set<SportCenterCommand> sportCenterCommandSet = facilityService.getFacilitiesFromSportCenter();
-        model.addAttribute("sportCenters", sportCenterCommandSet);
+        List<FacilityCommand> facilityCommands = facilityService.getFacilitiesFromSportCenter(sportCenterId);
+        model.addAttribute("facilities", facilityCommands);
         return "sportcenter/facilitieslist";
     }
 

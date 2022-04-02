@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class FacilityCommand {
 
-    private String id;
+    private String facilityId;
     private String facilityName;
-    private String branchNames = "";
 
 }

@@ -1,13 +1,11 @@
 package com.onrcnk.citysports.services;
 
 import com.onrcnk.citysports.commands.FacilityCommand;
-import com.onrcnk.citysports.commands.SportCenterCommand;
 
-import java.util.Set;
+import java.util.List;
 
 public interface FacilityService {
 
-    Set<FacilityCommand> getFacilities();
-    Set<SportCenterCommand> getFacilitiesFromSportCenter();
+    List<FacilityCommand> getFacilitiesFromSportCenter(String id);
 
 }

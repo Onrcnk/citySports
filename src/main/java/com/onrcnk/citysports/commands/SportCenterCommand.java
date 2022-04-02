@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class SportCenterCommand {
 
-    private String id;
+    private String sportCenterId;
     private String sportCenterName;
     private String facilityName;
     private String facilityNames = "";

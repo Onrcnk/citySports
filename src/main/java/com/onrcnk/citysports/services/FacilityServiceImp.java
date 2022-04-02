@@ -1,17 +1,18 @@
 package com.onrcnk.citysports.services;
 
 import com.onrcnk.citysports.commands.FacilityCommand;
-import com.onrcnk.citysports.commands.SportCenterCommand;
-import com.onrcnk.citysports.converters.FacilityToFacilityCommand;
-import com.onrcnk.citysports.converters.SportCenterToSportCenterCommand;
 import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.SportCenter;
+import com.onrcnk.citysports.mappers.FacilityMapper;
 import com.onrcnk.citysports.repositories.FacilityRepository;
+import com.onrcnk.citysports.repositories.SportCenterRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -19,37 +20,33 @@ import java.util.Set;
 public class FacilityServiceImp implements FacilityService{
 
     private final FacilityRepository facilityRepository;
-    private final FacilityToFacilityCommand facilityToFacilityCommand;
-    private final SportCenterToSportCenterCommand sportCenterToSportCenterCommand;
+    private final SportCenterRepository sportCenterRepository;
+    private final FacilityMapper facilityMapper;
 
-    public FacilityServiceImp(FacilityRepository facilityRepository, FacilityToFacilityCommand facilityToFacilityCommand, SportCenterToSportCenterCommand sportCenterToSportCenterCommand) {
+    @Autowired
+    public FacilityServiceImp(FacilityRepository facilityRepository,
+                              SportCenterRepository sportCenterRepository,
+                              FacilityMapper facilityMapper) {
         this.facilityRepository = facilityRepository;
-        this.facilityToFacilityCommand = facilityToFacilityCommand;
-        this.sportCenterToSportCenterCommand = sportCenterToSportCenterCommand;
+        this.sportCenterRepository = sportCenterRepository;
+        this.facilityMapper = facilityMapper;
     }
 
+
     @Override
-    public Set<FacilityCommand> getFacilities() {
+    public List<FacilityCommand> getFacilitiesFromSportCenter(String id) {
 
-        Set<FacilityCommand> facilityCommandSet = new LinkedHashSet<>();
-        List<Facility> facilitySet = facilityRepository.findAllByOrderByFacilityNameAsc();
+        Optional<SportCenter> sportCenters = sportCenterRepository.findById(id);
+        Set<Facility> facilityList = sportCenters.get().getFacilities();
+        List<FacilityCommand> facilityCommandsList = new ArrayList<>();
 
-        for(Facility facility : facilitySet){
-            facilityCommandSet.add(facilityToFacilityCommand.convert(facility));
+        for(Facility facility : facilityList) {
+            FacilityCommand facilityCommand = facilityMapper.facilityToFacilityCommand(facility);
+            facilityCommandsList.add(facilityCommand);
         }
 
-        return facilityCommandSet;
 
-    }
-
-    @Override
-    public Set<SportCenterCommand> getFacilitiesFromSportCenter() {
-
-        Set<SportCenterCommand> sportCenterCommandSet = new LinkedHashSet<>();
-        List<Facility> sportCenters = facilityRepository.findAllBySportCenterId("753da086-5453-4a27-baaa-6284c7a2931c");
-
-        return sportCenterCommandSet;
-
+        return facilityCommandsList;
     }
 
 

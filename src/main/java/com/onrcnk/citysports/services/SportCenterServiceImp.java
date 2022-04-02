@@ -1,10 +1,11 @@
 package com.onrcnk.citysports.services;
 
 import com.onrcnk.citysports.commands.SportCenterCommand;
-import com.onrcnk.citysports.converters.SportCenterToSportCenterCommand;
 import com.onrcnk.citysports.domain.SportCenter;
+import com.onrcnk.citysports.mappers.SportCenterMapper;
 import com.onrcnk.citysports.repositories.SportCenterRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
@@ -16,24 +17,24 @@ import java.util.Set;
 public class SportCenterServiceImp implements SportCenterService{
 
     private final SportCenterRepository sportCenterRepository;
-    private final SportCenterToSportCenterCommand sportCenterToSportCenterCommand;
+    private final SportCenterMapper sportCenterMapper;
 
-    public SportCenterServiceImp(SportCenterRepository sportCenterRepository, SportCenterToSportCenterCommand sportCenterToSportCenterCommand) {
+    @Autowired
+    public SportCenterServiceImp(SportCenterRepository sportCenterRepository,
+                                 SportCenterMapper sportCenterMapper) {
         this.sportCenterRepository = sportCenterRepository;
-        this.sportCenterToSportCenterCommand = sportCenterToSportCenterCommand;
+        this.sportCenterMapper = sportCenterMapper;
     }
 
     @Override
-    public Set<SportCenterCommand> getSportCenter() {
+    public Set<SportCenterCommand> getAllSportCenter() {
+        Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
+        List<SportCenter> sportCenters = sportCenterRepository.findAll();
 
-//        Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
-//        List<SportCenter> sportCenters = sportCenterRepository.findAllByOrderBySportsCenterAsc();
-//
-//        for(SportCenter sportCenter : sportCenters){
-//            sportCenterCommands.add(sportCenterToSportCenterCommand.convert(sportCenter));
-//        }
-
-        return null;
+        for(SportCenter sportCenter : sportCenters){
+            sportCenterCommands.add(sportCenterMapper.sportCenterToSportCenterCommand(sportCenter));
+        }
+        return sportCenterCommands;
 
     }
 }

@@ -21,7 +21,7 @@ public class SportCenter {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(updatable = false, nullable = false)
-    private String sportsCenterId;
+    private String sportCenterId;
 
     private String sportCenterName;
 
