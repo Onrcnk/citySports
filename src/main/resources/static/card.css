@@ -1,0 +1,31 @@
+body{
+
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+}
+img {
+    max-width: 100%;
+}
+.image {
+    flex-basis: 40%;
+}
+.text {
+    font-size: 20px;
+    padding-left: 20px;
+}
+.my-card-button{
+    margin-top: 15px;
+}
+
+.my-card-text{
+    height: 6rem;
+}
+
+.my_navbar_alignment{
+    margin-left: 1550px;
+}

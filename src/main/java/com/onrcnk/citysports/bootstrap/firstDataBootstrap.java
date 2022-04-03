@@ -32,6 +32,7 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         if(userRepository.count()==0) {
             setData();
         }
+
     }
 
     public void setData() {
@@ -71,6 +72,7 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         Facility multiFunctionalFacility = new Facility();
         Facility tennisCourt = new Facility();
         Facility tennisCourt2 = new Facility();
+        Facility tennisCourt3 = new Facility();
         Facility boxingRing = new Facility();
         Facility footballField = new Facility();
         Facility footballField2 = new Facility();
@@ -107,6 +109,9 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         tennisCourt2.setFacilityName("Izmir Tennis Court");
         tennisCourt2.setSportsCenter(izmir);
 
+        tennisCourt3.setFacilityName("Izmır Tennis Court - 2");
+        tennisCourt3.setSportsCenter(izmir);
+
         sportCenterRepository.save(izmir);
         sportCenterRepository.save(istanbul);
         sportCenterRepository.save(samsun);
@@ -114,20 +119,32 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         facilityRepository.save(multiFunctionalFacility);
         facilityRepository.save(tennisCourt);
         facilityRepository.save(tennisCourt2);
+        facilityRepository.save(tennisCourt3);
         facilityRepository.save(boxingRing);
         facilityRepository.save(footballField);
         facilityRepository.save(multiFunctionalFacility2);
         facilityRepository.save(footballField2);
 
-        football.getFacility().add(footballField);
-        football.getFacility().add(footballField2);
-        boxing.getFacility().add(boxingRing);
-        tennis.getFacility().add(tennisCourt);
-        tennis.getFacility().add(tennisCourt2);
-        basketball.getFacility().add(multiFunctionalFacility);
-        volleyball.getFacility().add(multiFunctionalFacility);
-        volleyball.getFacility().add(multiFunctionalFacility2);
-        football.getFacility().add(multiFunctionalFacility2);
+        football.getFacilitySet().add(footballField);
+        football.getFacilitySet().add(footballField2);
+        boxing.getFacilitySet().add(boxingRing);
+        tennis.getFacilitySet().add(tennisCourt);
+        tennis.getFacilitySet().add(tennisCourt2);
+        tennis.getFacilitySet().add(tennisCourt3);
+        basketball.getFacilitySet().add(multiFunctionalFacility);
+        volleyball.getFacilitySet().add(multiFunctionalFacility);
+        volleyball.getFacilitySet().add(multiFunctionalFacility2);
+        football.getFacilitySet().add(multiFunctionalFacility2);
+
+        basketball.getSportCenterSet().add(istanbul);
+        volleyball.getSportCenterSet().add(izmir);
+        volleyball.getSportCenterSet().add(istanbul);
+        boxing.getSportCenterSet().add(samsun);
+        football.getSportCenterSet().add(izmir);
+        football.getSportCenterSet().add(samsun);
+        football.getSportCenterSet().add(istanbul);
+        tennis.getSportCenterSet().add(izmir);
+        tennis.getSportCenterSet().add(istanbul);
 
         branchRepository.save(basketball);
         branchRepository.save(volleyball);

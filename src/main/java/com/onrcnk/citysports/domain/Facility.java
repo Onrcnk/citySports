@@ -34,7 +34,7 @@ public class Facility {
     @OneToMany
     private Set<Comment> commentSet = new HashSet<>();
 
-    @ManyToMany(mappedBy = "facility")
+    @ManyToMany(mappedBy = "facilitySet")
     private Set<Branch> branchSet;
 
     @OneToMany

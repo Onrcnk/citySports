@@ -29,6 +29,12 @@ public class Branch {
     @JoinTable(name = "branch_facility",
             joinColumns = @JoinColumn(name = "branch_id"),
             inverseJoinColumns = @JoinColumn(name = "facility_id"))
-    private Set<Facility> facility = new HashSet<>();
+    private Set<Facility> facilitySet = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "branch_sportCenter",
+            joinColumns = @JoinColumn(name = "branch_id"),
+            inverseJoinColumns = @JoinColumn(name = "sportCenter_id"))
+    private Set<SportCenter> sportCenterSet = new HashSet<>();
 
 }

@@ -1,6 +1,6 @@
 package com.onrcnk.citysports.controllers;
 
-import com.onrcnk.citysports.commands.FacilityCommand;
+import com.onrcnk.citysports.commands.BranchCommand;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.services.FacilityService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,19 +23,18 @@ public class FacilityController {
         this.facilityRepository = facilityRepository;
     }
 
-    @RequestMapping("/facilities")
+    @RequestMapping("/branches")
     public String getFacilityPage(Model model){
 
-        return "showfacilitiesnew";
+        return "showbranches";
     }
 
-    @RequestMapping("/facilities/{sportCenterId}/list")
-    public String getFacilityList(@PathVariable String sportCenterId, Model model){
+    @RequestMapping("/branchlist/{sportCenterId}")
+    public String getBranchListFromSportCenter(@PathVariable String sportCenterId, Model model){
 
-        List<FacilityCommand> facilityCommands = facilityService.getFacilitiesFromSportCenter(sportCenterId);
-        model.addAttribute("facilities", facilityCommands);
-        return "sportcenter/facilitieslist";
+        List<BranchCommand> branchCommand = facilityService.getBranchFromSportCenter(sportCenterId);
+        model.addAttribute("branches", branchCommand);
+        return "sportcenter/brancheslist";
     }
-
 
 }

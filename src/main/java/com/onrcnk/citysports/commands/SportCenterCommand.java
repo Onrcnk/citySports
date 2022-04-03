@@ -9,6 +9,7 @@ public class SportCenterCommand {
 
     private String sportCenterId;
     private String sportCenterName;
+    private String branchId;
     private String facilityName;
     private String facilityNames = "";
 }

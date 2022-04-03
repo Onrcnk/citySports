@@ -28,4 +28,7 @@ public class SportCenter {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sportsCenter")
     private Set<Facility> facilities = new HashSet<>();
 
+    @ManyToMany(mappedBy = "sportCenterSet")
+    private Set<Branch> branchSet;
+
 }

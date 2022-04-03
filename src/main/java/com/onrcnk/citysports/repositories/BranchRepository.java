@@ -1,7 +1,9 @@
 package com.onrcnk.citysports.repositories;
 
 import com.onrcnk.citysports.domain.Branch;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BranchRepository extends CrudRepository<Branch, String> {
+@Repository
+public interface BranchRepository extends JpaRepository<Branch, String> {
 }

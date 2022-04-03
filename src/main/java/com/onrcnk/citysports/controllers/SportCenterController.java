@@ -1,6 +1,5 @@
 package com.onrcnk.citysports.controllers;
 
-import com.onrcnk.citysports.commands.FacilityCommand;
 import com.onrcnk.citysports.commands.SportCenterCommand;
 import com.onrcnk.citysports.repositories.SportCenterRepository;
 import com.onrcnk.citysports.services.FacilityService;
@@ -36,12 +35,12 @@ public class SportCenterController {
         return "sportcenter/showsportcenters";
     }
 
-    @RequestMapping("/sportcenters/{sportCenterId}/list")
-    public String getFacilityList(@PathVariable String sportCenterId, Model model){
+    @RequestMapping("/sportcenters/{branchId}/list")
+    public String getSportCenterList(@PathVariable String branchId, Model model){
 
-        List<FacilityCommand> facilityCommands = facilityService.getFacilitiesFromSportCenter(sportCenterId);
-        model.addAttribute("facilities", facilityCommands);
-        return "sportcenter/facilitieslist";
+        List<SportCenterCommand> sportCenterCommands = sportCenterService.getSportCenterFromBranch(branchId);
+        model.addAttribute("sportCenters", sportCenterCommands);
+        return "sportcenter/sportcenterslist";
     }
 
 }
