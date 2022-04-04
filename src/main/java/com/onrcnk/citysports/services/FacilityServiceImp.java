@@ -1,8 +1,8 @@
 package com.onrcnk.citysports.services;
 
-import com.onrcnk.citysports.commands.BranchCommand;
+import com.onrcnk.citysports.commands.FacilityCommand;
 import com.onrcnk.citysports.domain.Branch;
-import com.onrcnk.citysports.domain.SportCenter;
+import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.mappers.BranchMapper;
 import com.onrcnk.citysports.mappers.FacilityMapper;
 import com.onrcnk.citysports.repositories.BranchRepository;
@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -38,23 +35,49 @@ public class FacilityServiceImp implements FacilityService{
         this.branchMapper = branchMapper;
     }
 
-
     @Override
-    public List<BranchCommand> getBranchFromSportCenter(String id) {
+    public Set<FacilityCommand> getAllFacilities() {
+        Set<FacilityCommand> facilityCommands = new LinkedHashSet<>();
+        List<Facility> facilities = facilityRepository.findAll();
 
-        Optional<SportCenter> sportCenters = sportCenterRepository.findById(id);
-        Set<Branch> branchSet = sportCenters.get().getBranchSet();
-        List<BranchCommand> branchCommandList = new ArrayList<>();
-
-        for(Branch branch : branchSet) {
-            BranchCommand branchCommand = branchMapper.branchToBranchComment(branch);
-            branchCommand.setSportCenterId(id);
-            branchCommandList.add(branchCommand);
+        for(Facility facility : facilities){
+            facilityCommands.add(facilityMapper.facilityToFacilityCommand(facility));
         }
+        return facilityCommands;
 
-        return branchCommandList;
     }
 
+    @Override
+    public Set<FacilityCommand> getFacilityFromSportCenterAndBranch(String branchId, String sportCenterId) {
+
+        Optional<Branch> branches = branchRepository.findById(branchId);
+        Set<Facility> facilitySet = branches.get().getFacilitySet();
+        Set<FacilityCommand> facilityCommands = new LinkedHashSet<>();
+
+        for(Facility facility:facilitySet){
+            if(facility.getSportsCenter().getSportCenterId().equals(sportCenterId)) {
+                FacilityCommand facilityCommand = facilityMapper.facilityToFacilityCommand(facility);
+                facilityCommands.add(facilityCommand);
+            }
+        }
+        return facilityCommands;
+    }
+
+    @Override
+    public Set<FacilityCommand> getFacilityFromBranchAndSportCenter(String branchId, String sportCenterId) {
+
+        Optional<Branch> branches = branchRepository.findById(branchId);
+        Set<Facility> facilitySet = branches.get().getFacilitySet();
+        Set<FacilityCommand> facilityCommands = new LinkedHashSet<>();
+
+        for(Facility facility:facilitySet){
+            if(facility.getSportsCenter().getSportCenterId().equals(sportCenterId)) {
+                FacilityCommand facilityCommand = facilityMapper.facilityToFacilityCommand(facility);
+                facilityCommands.add(facilityCommand);
+            }
+        }
+        return facilityCommands;
+    }
 
 
 }

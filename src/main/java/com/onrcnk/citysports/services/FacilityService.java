@@ -1,11 +1,14 @@
 package com.onrcnk.citysports.services;
 
-import com.onrcnk.citysports.commands.BranchCommand;
+import com.onrcnk.citysports.commands.FacilityCommand;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FacilityService {
 
-    List<BranchCommand> getBranchFromSportCenter(String id);
+    Set<FacilityCommand> getAllFacilities();
+    Set<FacilityCommand> getFacilityFromSportCenterAndBranch(String branchId, String sportCenterId);
+    Set<FacilityCommand> getFacilityFromBranchAndSportCenter(String branchId, String sportCenterId);
 
 }

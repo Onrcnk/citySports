@@ -29,17 +29,17 @@ public class SportCenterController {
 
     @RequestMapping("/sportcenters")
     public String getSportCenterPage(Model model){
-        Set<SportCenterCommand> sportCenterCommandSet = sportCenterService.getAllSportCenter();
+        Set<SportCenterCommand> sportCenterCommandSet = sportCenterService.getAllSportCenters();
         model.addAttribute("sportCenters", sportCenterCommandSet);
 
         return "sportcenter/showsportcenters";
     }
 
-    @RequestMapping("/sportcenters/{branchId}/list")
-    public String getSportCenterList(@PathVariable String branchId, Model model){
+    @RequestMapping("/sportcenterslist/{branchId}")
+    public String getSportCenterListFromBranch(@PathVariable String branchId, Model model){
 
-        List<SportCenterCommand> sportCenterCommands = sportCenterService.getSportCenterFromBranch(branchId);
-        model.addAttribute("sportCenters", sportCenterCommands);
+        Set<SportCenterCommand> sportCenterCommands = sportCenterService.getSportCenterFromBranch(branchId);
+        model.addAttribute("sportCenters",sportCenterCommands);
         return "sportcenter/sportcenterslist";
     }
 

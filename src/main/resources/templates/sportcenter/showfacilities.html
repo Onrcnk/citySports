@@ -15,7 +15,7 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-        <img src="../../static/images/logo.jpg" th:src="@{/images/logo.jpg}" style="width: 100px; height: 45px">
+    <img src="../../static/images/logo.jpg" th:src="@{/images/logo.jpg}" style="width: 100px; height: 45px">
     <li class="nav-item">
         <a class="nav-link" aria-current="page" href="#" th:href="@{'/sportcenters'}">Sport Centers</a>
     </li>
@@ -40,8 +40,8 @@
 
 <div class="row">
     <div class="col-1"></div>
-    <div class="col-5">
-        <p style="font-size:100px; color: #2a54dc; font-family: 'Fira Code Retina' ;"> Sport Centers </p>
+    <div class="col-3">
+        <p style="font-size:100px; color: #2a54dc; font-family: 'Fira Code Retina' ;"> Facilities </p>
         <hr style= "width:500%; color:#1246e1; height: 2px" />
     </div>
 
@@ -51,23 +51,21 @@
 <p>&nbsp;</p>
 
 <div class="row">
-    <tr th:each="sportCenter : ${sportCenters}">
-        <div class="col-2"></div>
+    <div class="col-2"></div>
+    <tr th:each="facility : ${facilities}">
         <div class="card" style="width: 18rem;">
-            <img src="../../static/images/izmır_sport_center.jpg" th:src="@{/images/izmır_sport_center.jpg}" class="card-img-top" alt="Izmır_Sport_Center" style="width: 300px; height: 250px">
+            <img src="../../static/images/tennis_court.jpg" th:src="@{/images/tennis_court.jpg}" class="card-img-top" alt="Tennis_Court" style="width: 300px; height: 250px">
             <div class="card-body">
                 <figure class="text-center">
-                    <h5 class="card-title my-card-head" th:text="${sportCenter.sportCenterName}">Izmır Sport Center</h5>
+                    <h5 class="card-title my-card-head" th:text="${facility.facilityName}">Facility Name</h5>
                 </figure>
-                <p class="card-text my-card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                <p class="card-text my-card-text">This is one of the most popular elite games. Take your place, quickly !</p>
                 <div class="d-grid col-10 mx-auto">
-                    <a href="#" class="btn btn-primary" th:href="@{'/branchlist/' + ${sportCenter.sportCenterId}}">Show Branches</a>
+                    <a href="#" class="btn btn-primary">Make Reservation !</a>
                 </div>
             </div>
         </div>
     </tr>
-</div>
-    <p>&nbsp;</p>
 </div>
 </body>
 </html>

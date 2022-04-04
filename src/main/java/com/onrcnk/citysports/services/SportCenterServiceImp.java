@@ -32,7 +32,7 @@ public class SportCenterServiceImp implements SportCenterService{
     }
 
     @Override
-    public Set<SportCenterCommand> getAllSportCenter() {
+    public Set<SportCenterCommand> getAllSportCenters() {
         Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
         List<SportCenter> sportCenters = sportCenterRepository.findAll();
 
@@ -44,18 +44,21 @@ public class SportCenterServiceImp implements SportCenterService{
     }
 
     @Override
-    public List<SportCenterCommand> getSportCenterFromBranch(String id) {
+    public Set<SportCenterCommand> getSportCenterFromBranch(String branchId) {
 
-        Optional<Branch> branchOptional = branchRepository.findById(id);
+        Optional<Branch> branchOptional = branchRepository.findById(branchId);
         Set<SportCenter> sportCenterSet = branchOptional.get().getSportCenterSet();
 
-        List<SportCenterCommand> sportCenterCommands = new ArrayList<>();
+        Set<SportCenterCommand> sportCenterCommands = new LinkedHashSet<>();
 
         for(SportCenter sportCenter : sportCenterSet) {
             SportCenterCommand sportCenterCommand = sportCenterMapper.sportCenterToSportCenterCommand(sportCenter);
+            sportCenterCommand.setBranchId(branchId);
             sportCenterCommands.add(sportCenterCommand);
         }
 
         return sportCenterCommands;
     }
+
+
 }

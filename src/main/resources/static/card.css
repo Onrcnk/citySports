@@ -22,10 +22,14 @@ img {
     margin-top: 15px;
 }
 
+.my-card-head{
+height: 2rem
+}
+
 .my-card-text{
     height: 6rem;
 }
 
 .my_navbar_alignment{
-    margin-left: 1550px;
+    margin-left: 1060px;
 }

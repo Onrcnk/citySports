@@ -7,6 +7,6 @@ import java.util.Set;
 
 public interface SportCenterService {
 
-    Set<SportCenterCommand> getAllSportCenter();
-    List<SportCenterCommand> getSportCenterFromBranch(String id);
+    Set<SportCenterCommand> getAllSportCenters();
+    Set<SportCenterCommand> getSportCenterFromBranch(String branchId);
 }
