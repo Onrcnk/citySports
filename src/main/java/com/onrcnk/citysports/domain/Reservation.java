@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,4 +30,8 @@ public class Reservation {
 
     @OneToOne
     private Cart cart;
+
+    private LocalDateTime dateAndTime;
+
+    private String reservationStatus;
 }

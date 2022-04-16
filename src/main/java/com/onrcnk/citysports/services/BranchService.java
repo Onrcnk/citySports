@@ -2,7 +2,6 @@ package com.onrcnk.citysports.services;
 
 import com.onrcnk.citysports.commands.BranchCommand;
 
-import java.util.List;
 import java.util.Set;
 
 public interface BranchService {

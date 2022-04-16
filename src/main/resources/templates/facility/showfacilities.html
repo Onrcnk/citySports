@@ -57,11 +57,11 @@
             <img src="../../static/images/tennis_court.jpg" th:src="@{/images/tennis_court.jpg}" class="card-img-top" alt="Tennis_Court" style="width: 300px; height: 250px">
             <div class="card-body">
                 <figure class="text-center">
-                    <h5 class="card-title my-card-head" th:text="${facility.facilityName}">Tennis Court</h5>
+                    <h5 class="card-title my-card-head" th:text="${facility.facilityName}">Facility Name</h5>
                 </figure>
                 <p class="card-text my-card-text">This is one of the most popular elite games. Take your place, quickly !</p>
                 <div class="d-grid col-10 mx-auto">
-                    <a href="#" class="btn btn-primary">Make Reservation !</a>
+                    <a href="#" class="btn btn-primary" th:href="@{'/reservation'}">Make Reservation !</a>
                 </div>
             </div>
         </div>

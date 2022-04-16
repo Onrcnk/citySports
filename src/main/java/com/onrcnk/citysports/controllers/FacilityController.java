@@ -31,7 +31,7 @@ public class FacilityController {
 
         Set<FacilityCommand> facilityCommand = facilityService.getAllFacilities();
         model.addAttribute("facilities", facilityCommand);
-        return "sportcenter/showfacilities";
+        return "facility/showfacilities";
     }
 
     @RequestMapping("/facilitylist/{sportCenterId}/{branchId}")
@@ -39,7 +39,7 @@ public class FacilityController {
 
         Set<FacilityCommand> facilityCommands = facilityService.getFacilityFromSportCenterAndBranch(branchId, sportCenterId);
         model.addAttribute("facilities", facilityCommands);
-        return "sportcenter/facilitieslist";
+        return "facility/facilitieslist";
     }
 
 }

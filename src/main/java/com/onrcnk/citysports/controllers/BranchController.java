@@ -1,7 +1,6 @@
 package com.onrcnk.citysports.controllers;
 
 import com.onrcnk.citysports.commands.BranchCommand;
-import com.onrcnk.citysports.commands.FacilityCommand;
 import com.onrcnk.citysports.services.BranchService;
 import com.onrcnk.citysports.services.FacilityService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -29,7 +27,7 @@ public class BranchController {
     public String getBranchPage(Model model){
         Set<BranchCommand> branchCommands = branchService.getAllFacilities();
         model.addAttribute("branches", branchCommands);
-        return "sportcenter/showbranches";
+        return "branch/showbranches";
     }
 
     @RequestMapping("/branchlist/{sportCenterId}")
@@ -37,6 +35,6 @@ public class BranchController {
 
         Set<BranchCommand> branchCommand = branchService.getBranchFromSportCenter(sportCenterId);
         model.addAttribute("branches", branchCommand);
-        return "sportcenter/brancheslist";
+        return "branch/brancheslist";
     }
 }
