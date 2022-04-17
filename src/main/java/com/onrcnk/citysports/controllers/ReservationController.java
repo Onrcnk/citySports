@@ -1,6 +1,5 @@
 package com.onrcnk.citysports.controllers;
 
-import com.onrcnk.citysports.commands.DayAndTimeListCommand;
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +22,8 @@ public class ReservationController {
     @RequestMapping("/reservation")
     public String getReservationPage(Model model){
 
-        Set<DayAndTimeListCommand> dayAndTimeListCommands = reservationService.getReservation();
-        model.addAttribute("reservations",dayAndTimeListCommands);
+        Set<ReservationCommand> reservationCommands = reservationService.getReservation();
+        model.addAttribute("reservations",reservationCommands);
 
         return "reservationpage";
     }

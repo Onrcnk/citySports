@@ -31,7 +31,12 @@ public class Reservation {
     @OneToOne
     private Cart cart;
 
-    private LocalDateTime dateAndTime;
+    private String dayName;
 
-    private String reservationStatus;
+    private String time;
+
+    private String Status;
+
+    public LocalDateTime dateAndTime;
+    
 }

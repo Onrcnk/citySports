@@ -6,9 +6,7 @@ import com.onrcnk.citysports.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Map;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,6 +18,6 @@ public class ReservationCommand {
     private Cart cart;
     private String date;
     private String time;
-    private String dayName;
+    public DayCommandList dayCommandList;
     private String reservationStatus;
 }

@@ -1,7 +1,8 @@
 package com.onrcnk.citysports.services.Imp;
 
-import com.onrcnk.citysports.commands.DayAndTimeListCommand;
+import com.onrcnk.citysports.commands.DayCommandList;
 import com.onrcnk.citysports.commands.ReservationCommand;
+import com.onrcnk.citysports.commands.TimeCommandList;
 import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.mappers.ReservationMapper;
 import com.onrcnk.citysports.repositories.ReservationRepository;
@@ -9,8 +10,8 @@ import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -28,45 +29,67 @@ public class ReservationServiceImp implements ReservationService {
         this.reservationMapper = reservationMapper;
     }
 
-    public Set<LocalDateTime> getDayAndTimeSet(){
+    public Map<String, ArrayList<String>> getDayOfWeek(){
         LocalDateTime date = LocalDateTime.now();
-        Set<LocalDateTime> dates = new LinkedHashSet<>();
+        Map<String, ArrayList<String>> dates = new HashMap<String, ArrayList<String>>();
 
         for(int i=0; i < 7; i++){
-            for(int j=RESERVATION_START_TIME; j <= RESERVATION_END_TIME; j++){
-                if(date.getHour() < RESERVATION_END_TIME) {
-                    dates.add(date.plusDays(i).withHour(j).truncatedTo(ChronoUnit.HOURS));
-
-                }
+            String dayName = date.plusDays(i).getDayOfWeek().toString();
+            dates.put(dayName, new ArrayList<String>());
+            for(int j=RESERVATION_START_TIME; j <= RESERVATION_END_TIME; j++) {
+                String dayAndTime = date.plusDays(i).withHour(j).truncatedTo(ChronoUnit.HOURS).toString();
+                dates.get(dayName).add(dayAndTime);
             }
         }
+
         return dates;
     }
 
+    public List<String> getHourOfDay(){
+        LocalTime time = LocalTime.now();
+        List<String> timeList = new LinkedList<>();
+
+        for(int j=RESERVATION_START_TIME; j <= RESERVATION_END_TIME; j++) {
+            timeList.add(time.withHour(j).truncatedTo(ChronoUnit.HOURS).toString());
+        }
+
+        return timeList;
+    }
+
     @Override
-    public Set<DayAndTimeListCommand> getReservation(){
+    public Set<ReservationCommand> getReservation(){
 
         Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
         List<Reservation> reservations = reservationRepository.findAll();
-        Set<LocalDateTime> dayAndTimeSet = getDayAndTimeSet();
+        Map<String, ArrayList<String>> dayOfWeeks = getDayOfWeek();
+        List<String> hourOfDay = getHourOfDay();
 
-        Set<DayAndTimeListCommand> dayAndTimeListCommands = new LinkedHashSet<>();
+        for (String day : dayOfWeeks.keySet()){
 
-        for (LocalDateTime localDateTime : dayAndTimeSet){
-            DayAndTimeListCommand dayAndTimeListCommand = new DayAndTimeListCommand();
-            dayAndTimeListCommand.setDayAndTime(localDateTime);
-            dayAndTimeListCommand.setStatus("FREE");
-            dayAndTimeListCommand.setDayName(localDateTime.getDayOfWeek().toString());
-            dayAndTimeListCommands.add(dayAndTimeListCommand);
+            for(String time : dayOfWeeks.get(day)) {
+                DayCommandList dayCommandList = new DayCommandList();
+                TimeCommandList timeCommandList = new TimeCommandList();
+                ReservationCommand reservationCommand = new ReservationCommand();
+                dayCommandList.setDayName(day);
+                dayCommandList.setStatus("FREE");
+                timeCommandList.setTime(time);
+                dayCommandList.setTime(timeCommandList);
+
+                reservationCommand.setDayCommandList(dayCommandList);
+                reservationCommands.add(reservationCommand);
+            }
         }
 
         for(Reservation reservation : reservations){
-            for(DayAndTimeListCommand dayAndTimeListCommand : dayAndTimeListCommands){
-                if(dayAndTimeListCommand.getDayAndTime().equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS))){
-                    dayAndTimeListCommand.setStatus("RESERVED");
+            for(ReservationCommand reservationCommand : reservationCommands){
+                if(reservationCommand.dayCommandList.getTime().time.equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS).toString())){
+                    reservationCommand.dayCommandList.setStatus("RESERVED");
                 }
             }
         }
-        return dayAndTimeListCommands;
+
+
+
+        return reservationCommands;
     }
 }
