@@ -52,11 +52,11 @@
 
 <div class="row">
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem; line-height: 2.3rem">
         <div class="card-header">
-            Featured
+            Seasons
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group">
             <li class="list-group-item">08:00</li>
             <li class="list-group-item">09:00</li>
             <li class="list-group-item">10:00</li>
@@ -73,14 +73,17 @@
 
     <tr th:each="reservation : ${reservations}">
 
-    <div class="card" style="width: 10rem;">
-        <div class="card-header text-center" th:text="${day}">
-            Monday
-        </div>
+    <div class="card" style="width: 10rem; line-height: 2.1rem">
+        <div class="card-header text-center" th:text="${reservation.dayCommand.dayName}"></div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item text-center">
-                <button type="button"class="btn btn-success" th:href="@{'/' + ${reservation.dayName}}">Reservation</button>
-            </li>
+            <th:block th:each ="timeCommand : ${reservation.dayCommand.timeCommand}">
+                <li class="list-group-item text-center">
+                    <span th:switch="${timeCommand.status}">
+                    <button th:case="false" type="button"class="btn btn-success" th:href="@{'/' + ${timeCommand.getTime()}}">Reservation</button>
+                    <button th:case="true" type="button"class="btn btn-secondary" disabled data-bs-toggle="button">Reserved</button>
+                    </span>
+                </li>
+            </th:block>
         </ul>
 
     </div>

@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class TimeCommandList {
+public class TimeCommand {
 
-    public String time;
+    public LocalDateTime time;
+    public boolean status;
 }
