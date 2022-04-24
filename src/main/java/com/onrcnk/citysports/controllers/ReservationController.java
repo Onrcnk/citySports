@@ -5,6 +5,7 @@ import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Set;
@@ -19,12 +20,12 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @RequestMapping("/reservation")
-    public String getReservationPage(Model model){
+    @RequestMapping("/reservation/{facilityId}")
+    public String getReservationPage(@PathVariable String facilityId, Model model){
 
-        Set<ReservationCommand> reservationCommands = reservationService.getReservation();
+        Set<ReservationCommand> reservationCommands = reservationService.getReservation(facilityId);
         model.addAttribute("reservations",reservationCommands);
 
-        return "reservationpage";
+        return "reservation/reservationpage";
     }
 }

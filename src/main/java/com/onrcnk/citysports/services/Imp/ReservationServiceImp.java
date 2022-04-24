@@ -3,7 +3,9 @@ package com.onrcnk.citysports.services.Imp;
 import com.onrcnk.citysports.commands.DayCommand;
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
+import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.Reservation;
+import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.ReservationRepository;
 import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,18 +13,22 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
 public class ReservationServiceImp implements ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final FacilityRepository facilityRepository;
     public static int RESERVATION_START_TIME = 8;
     public static int RESERVATION_END_TIME = 18;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, FacilityRepository facilityRepository) {
         this.reservationRepository = reservationRepository;
+        this.facilityRepository = facilityRepository;
     }
 
     public Set<DayCommand> getDayOfWeek(){
@@ -51,10 +57,11 @@ public class ReservationServiceImp implements ReservationService {
     }
 
     @Override
-    public Set<ReservationCommand> getReservation(){
+    public Set<ReservationCommand> getReservation(String facilityId){
 
         Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
-        List<Reservation> reservations = reservationRepository.findAll();
+        Optional<Facility> facility = facilityRepository.findById(facilityId);
+        Set<Reservation> reservations = facility.get().getReservationSet();
         Set<DayCommand> dayCommandSet = getDayOfWeek();
 
         for (DayCommand dayCommand : dayCommandSet){
@@ -65,18 +72,15 @@ public class ReservationServiceImp implements ReservationService {
 
         }
 
-        for(Reservation reservation : reservations){
-            for(ReservationCommand reservationCommand : reservationCommands){
+        for(Reservation reservation : reservations) {
+            for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
-                    if(timeCommand.time.equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS))){
+                    if (timeCommand.time.equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS))) {
                         timeCommand.setStatus(true);
                     }
-
                 }
-
             }
         }
-
         return reservationCommands;
     }
 }

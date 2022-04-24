@@ -61,7 +61,7 @@
                 </figure>
                 <p class="card-text my-card-text">This is one of the most popular elite games. Take your place, quickly !</p>
                 <div class="d-grid col-10 mx-auto">
-                    <a href="#" class="btn btn-primary" th:href="@{'/reservation'}">Make Reservation !</a>
+                    <a href="#" class="btn btn-primary" th:href="@{'/reservation/' + ${facility.facilityId}}">Make Reservation !</a>
                 </div>
             </div>
         </div>

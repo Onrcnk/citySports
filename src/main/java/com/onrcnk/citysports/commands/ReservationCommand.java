@@ -11,7 +11,7 @@ import lombok.Setter;
 public class ReservationCommand {
 
     private String reservationId;
-    private Facility facility;
+    private Facility facilityId;
     private User user;
     private Cart cart;
     public DayCommand dayCommand;

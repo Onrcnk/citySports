@@ -6,5 +6,5 @@ import java.util.Set;
 
 public interface ReservationService {
 
-    Set<ReservationCommand> getReservation();
+    Set<ReservationCommand> getReservation(String facilityId);
 }
