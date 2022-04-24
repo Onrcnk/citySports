@@ -78,9 +78,10 @@
         <ul class="list-group list-group-flush">
             <th:block th:each ="timeCommand : ${reservation.dayCommand.timeCommand}">
                 <li class="list-group-item text-center">
-                    <span th:switch="${timeCommand.status}">
-                    <button th:case="false" type="button"class="btn btn-success" th:href="@{'/' + ${timeCommand.getTime()}}">Reservation</button>
-                    <button th:case="true" type="button"class="btn btn-secondary" disabled data-bs-toggle="button">Reserved</button>
+                    <span th:switch="${timeCommand.status.getDescription()}">
+                    <button th:case="RESERVE" type="button"class="btn btn-success" th:href="@{'/' + ${timeCommand.getTime()}}" th:text="${timeCommand.status.getDescription()}">Reservation</button>
+                    <button th:case="UNAVAILABLE" type="button"class="btn btn-secondary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Unavailable</button>
+                    <button th:case="RESERVED" type="button"class="btn btn-danger" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Reserved</button>
                     </span>
                 </li>
             </th:block>

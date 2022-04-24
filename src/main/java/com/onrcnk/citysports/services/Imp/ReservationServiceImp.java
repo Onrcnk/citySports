@@ -5,6 +5,7 @@ import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
 import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.Reservation;
+import com.onrcnk.citysports.domain.ReservationStatus;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.ReservationRepository;
 import com.onrcnk.citysports.services.ReservationService;
@@ -46,7 +47,11 @@ public class ReservationServiceImp implements ReservationService {
                 TimeCommand timeCommand = new TimeCommand();
                 LocalDateTime dayAndTime = date.plusDays(i).withHour(j).truncatedTo(ChronoUnit.HOURS);
                 timeCommand.setTime(dayAndTime);
-                timeCommand.setStatus(date.isAfter(timeCommand.getTime()));
+                if(date.isAfter(timeCommand.getTime())){
+                    timeCommand.setStatus(ReservationStatus.UNAVAILABLE);
+                }else{
+                    timeCommand.setStatus(ReservationStatus.RESERVE);
+                }
                 timeCommandSet.add(timeCommand);
                 dayCommand.setTimeCommand(timeCommandSet);
                 dayCommandSet.add(dayCommand);
@@ -76,7 +81,7 @@ public class ReservationServiceImp implements ReservationService {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
                     if (timeCommand.time.equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS))) {
-                        timeCommand.setStatus(true);
+                        timeCommand.setStatus(ReservationStatus.RESERVED);
                     }
                 }
             }
