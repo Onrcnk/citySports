@@ -25,12 +25,13 @@ public class User {
 
     private String name;
     private String surname;
+    private String password;
     private String birthDate;
+    private String roles;
 
     @Column(unique = true)
     private String email;
 
-    private String password;
     private Byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

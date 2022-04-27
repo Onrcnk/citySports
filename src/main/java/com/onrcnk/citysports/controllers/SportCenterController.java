@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class SportCenterController {
         this.facilityService = facilityService;
     }
 
-    @RequestMapping("/sportcenters")
+    @RequestMapping({"","/", "/sportcenters"})
     public String getSportCenterPage(Model model){
         Set<SportCenterCommand> sportCenterCommandSet = sportCenterService.getAllSportCenters();
         model.addAttribute("sportCenters", sportCenterCommandSet);
