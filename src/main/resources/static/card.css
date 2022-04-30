@@ -6,8 +6,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px;
+
 }
+
 .img {
     max-width: 100%;
 }
@@ -23,13 +24,13 @@ body{
 }
 
 .my-card-head{
-height: 2rem
+    height: 2rem
 }
 
 .my-card-text{
     height: 6rem;
 }
 
-.my_navbar_alignment{
+.my-navbar-alignment{
     margin-left: 1060px;
 }
