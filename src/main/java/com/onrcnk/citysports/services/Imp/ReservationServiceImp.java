@@ -1,8 +1,10 @@
 package com.onrcnk.citysports.services.Imp;
 
+import com.onrcnk.citysports.commands.CartCommand;
 import com.onrcnk.citysports.commands.DayCommand;
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
+import com.onrcnk.citysports.domain.Cart;
 import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.domain.ReservationStatus;
@@ -12,8 +14,11 @@ import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -45,9 +50,11 @@ public class ReservationServiceImp implements ReservationService {
 
             for(int j=RESERVATION_START_TIME; j <= RESERVATION_END_TIME; j++) {
                 TimeCommand timeCommand = new TimeCommand();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime dayAndTime = date.plusDays(i).withHour(j).truncatedTo(ChronoUnit.HOURS);
-                timeCommand.setTime(dayAndTime);
-                if(date.isAfter(timeCommand.getTime())){
+                String dayAndTimeFormat = dayAndTime.format(formatter);
+                timeCommand.setTime(dayAndTimeFormat);
+                if(date.isAfter(dayAndTime)){
                     timeCommand.setStatus(ReservationStatus.UNAVAILABLE);
                 }else{
                     timeCommand.setStatus(ReservationStatus.RESERVE);
@@ -65,8 +72,7 @@ public class ReservationServiceImp implements ReservationService {
     public Set<ReservationCommand> getReservation(String facilityId){
 
         Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
-        Optional<Facility> facility = facilityRepository.findById(facilityId);
-        Set<Reservation> reservations = facility.get().getReservationSet();
+        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
         Set<DayCommand> dayCommandSet = getDayOfWeek();
 
         for (DayCommand dayCommand : dayCommandSet){
@@ -80,8 +86,40 @@ public class ReservationServiceImp implements ReservationService {
         for(Reservation reservation : reservations) {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
-                    if (timeCommand.time.equals(reservation.getDateAndTime().truncatedTo(ChronoUnit.HOURS))) {
+                    if (timeCommand.time.equals(reservation.getDateAndTime())) {
                         timeCommand.setStatus(ReservationStatus.RESERVED);
+                    }
+                }
+            }
+        }
+        return reservationCommands;
+    }
+
+    @Override
+    public Set<ReservationCommand> setReservationToCart(TimeCommand timeCommandReference,String facilityId) {
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setFacilityId(facilityId);
+        reservation1.setDateAndTime(timeCommandReference.time);
+        reservationRepository.save(reservation1);
+
+        Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
+        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
+        Set<DayCommand> dayCommandSet = getDayOfWeek();
+
+        for (DayCommand dayCommand : dayCommandSet){
+
+            ReservationCommand reservationCommand = new ReservationCommand();
+            reservationCommand.setDayCommand(dayCommand);
+            reservationCommands.add(reservationCommand);
+
+        }
+
+        for(Reservation reservation : reservations) {
+            for (ReservationCommand reservationCommand : reservationCommands) {
+                for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
+                    if (timeCommand.time.equals(reservation.getDateAndTime())) {
+                        timeCommand.setStatus(ReservationStatus.INTHECART);
                     }
                 }
             }

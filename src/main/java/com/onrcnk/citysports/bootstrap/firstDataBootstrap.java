@@ -45,19 +45,19 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         oguz.setSurname("Direnç Dinç");
         oguz.setPassword("3152");
         oguz.setEmail("dinc.oguz@hotmail.com");
-        oguz.setBirthDate("03.01.1981");
+        oguz.setRoles("USER");
 
         burak.setName("Burak");
         burak.setSurname("Topçu");
         burak.setPassword("1234");
         burak.setEmail("topcu.burak@hotmail.com");
-        burak.setBirthDate("14.12.1985");
+        burak.setRoles("USER");
 
         onurcan.setName("Onurcan");
         onurcan.setSurname("KURT");
         onurcan.setPassword("9090");
         onurcan.setEmail("kurt.onurcan@hotmail.com");
-        onurcan.setBirthDate("10.09.1993");
+        onurcan.setRoles("USER");
 
         SportCenter izmir = new SportCenter();
         SportCenter istanbul = new SportCenter();

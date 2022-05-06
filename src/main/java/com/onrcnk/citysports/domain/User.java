@@ -26,19 +26,16 @@ public class User {
     private String name;
     private String surname;
     private String password;
-    private String birthDate;
     private String roles;
 
     @Column(unique = true)
     private String email;
 
-    private Byte[] image;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
 
-    @OneToOne
-    private Cart cart;
+    @OneToMany
+    private Set<Cart> cartSet = new HashSet<>();
 
     @OneToMany
     private Set<Reservation> reservationSet = new HashSet<>();

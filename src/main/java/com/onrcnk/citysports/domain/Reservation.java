@@ -28,8 +28,10 @@ public class Reservation {
     @ManyToOne
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Cart cart;
+
+    private String facilityId;
 
     private String dayName;
 
@@ -37,6 +39,6 @@ public class Reservation {
 
     private String Status;
 
-    public LocalDateTime dateAndTime;
+    public String dateAndTime;
     
 }

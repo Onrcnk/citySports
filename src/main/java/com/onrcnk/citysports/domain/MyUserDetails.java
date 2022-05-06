@@ -1,4 +1,4 @@
-package com.onrcnk.citysports;
+package com.onrcnk.citysports.domain;
 
 import com.onrcnk.citysports.domain.User;
 import org.springframework.security.core.GrantedAuthority;

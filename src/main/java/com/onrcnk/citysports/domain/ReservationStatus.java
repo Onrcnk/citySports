@@ -6,13 +6,13 @@ import lombok.Getter;
 public enum ReservationStatus {
     RESERVE( "RESERVE"),
     RESERVED( "RESERVED"),
-    INTHECART("In The Cart"),
+    INTHECART("In_The_Cart"),
     UNAVAILABLE("UNAVAILABLE"),
     ;
 
     private String description;
 
-    ReservationStatus( String description) {
+    ReservationStatus(String description) {
         this.description = description;
     }
 }

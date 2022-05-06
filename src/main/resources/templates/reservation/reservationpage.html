@@ -76,15 +76,19 @@
     <div class="card" style="width: 10rem; line-height: 2.1rem">
         <div class="card-header text-center" th:text="${reservation.dayCommand.dayName}"></div>
         <ul class="list-group list-group-flush">
-            <th:block th:each ="timeCommand : ${reservation.dayCommand.timeCommand}">
-                <li class="list-group-item text-center">
-                    <span th:switch="${timeCommand.status.getDescription()}">
-                    <button th:case="RESERVE" type="button"class="btn btn-success" th:href="@{'/' + ${timeCommand.getTime()}}" th:text="${timeCommand.status.getDescription()}">Reservation</button>
-                    <button th:case="UNAVAILABLE" type="button"class="btn btn-secondary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Unavailable</button>
-                    <button th:case="RESERVED" type="button"class="btn btn-danger" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Reserved</button>
-                    </span>
-                </li>
-            </th:block>
+                <th:block th:each ="timeCommand : ${reservation.dayCommand.timeCommand}">
+                    <form th:object="${timeCommand}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${timeCommand.time}" th:name="time" th:id="time"/>
+                    <li class="list-group-item text-center">
+                        <span th:switch="${timeCommand.status.getDescription()}">
+                            <button th:case="RESERVE" type="submit" class="btn btn-success" th:text="${timeCommand.status.getDescription()}">Reservation</button>
+                            <button th:case="UNAVAILABLE" type="button" class="btn btn-secondary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Unavailable</button>
+                            <button th:case="RESERVED" type="button" class="btn btn-danger" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Reserved</button>
+                            <button th:case="In_The_Cart" type="button" class="btn btn-primary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">In The Cart</button>
+                        </span>
+                    </li>
+                    </form>
+                </th:block>
         </ul>
 
     </div>

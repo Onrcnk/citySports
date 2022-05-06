@@ -1,5 +1,6 @@
-package com.onrcnk.citysports;
+package com.onrcnk.citysports.services.Imp;
 
+import com.onrcnk.citysports.domain.MyUserDetails;
 import com.onrcnk.citysports.domain.User;
 import com.onrcnk.citysports.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

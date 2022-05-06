@@ -6,14 +6,16 @@ import com.onrcnk.citysports.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 public class ReservationCommand {
 
     private String reservationId;
-    private Facility facilityId;
+    private String facilityId;
     private User user;
-    private Cart cart;
+    private Set<Cart> cartSet;
     public DayCommand dayCommand;
 
 
