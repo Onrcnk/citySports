@@ -37,7 +37,7 @@ public class Reservation {
 
     private String time;
 
-    private String Status;
+    private ReservationStatus status;
 
     public String dateAndTime;
     

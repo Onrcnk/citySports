@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum ReservationStatus {
     RESERVE( "RESERVE"),
     RESERVED( "RESERVED"),
-    INTHECART("In_The_Cart"),
+    INTHECART("CARTED"),
     UNAVAILABLE("UNAVAILABLE"),
     ;
 

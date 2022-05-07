@@ -1,39 +1,42 @@
 package com.onrcnk.citysports.services.Imp;
 
-import com.onrcnk.citysports.commands.CartCommand;
 import com.onrcnk.citysports.commands.DayCommand;
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
-import com.onrcnk.citysports.domain.Cart;
-import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.domain.ReservationStatus;
+import com.onrcnk.citysports.domain.User;
+import com.onrcnk.citysports.repositories.CartRepository;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.ReservationRepository;
 import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.Set;
+
+import static com.onrcnk.citysports.domain.ReservationStatus.INTHECART;
+import static com.onrcnk.citysports.domain.ReservationStatus.RESERVED;
 
 @Slf4j
 @Service
 public class ReservationServiceImp implements ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final CartRepository cartRepository;
     private final FacilityRepository facilityRepository;
     public static int RESERVATION_START_TIME = 8;
     public static int RESERVATION_END_TIME = 18;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, FacilityRepository facilityRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, CartRepository cartRepository, FacilityRepository facilityRepository) {
         this.reservationRepository = reservationRepository;
+        this.cartRepository = cartRepository;
         this.facilityRepository = facilityRepository;
     }
 
@@ -69,10 +72,8 @@ public class ReservationServiceImp implements ReservationService {
     }
 
     @Override
-    public Set<ReservationCommand> getReservation(String facilityId){
-
+    public Set<ReservationCommand> creatReservationCommandList(String facilityId){
         Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
-        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
         Set<DayCommand> dayCommandSet = getDayOfWeek();
 
         for (DayCommand dayCommand : dayCommandSet){
@@ -80,14 +81,33 @@ public class ReservationServiceImp implements ReservationService {
             ReservationCommand reservationCommand = new ReservationCommand();
             reservationCommand.setDayCommand(dayCommand);
             reservationCommands.add(reservationCommand);
-
         }
+
+        return reservationCommands;
+    }
+
+    @Override
+    public Reservation creatReservationObject(@NotNull TimeCommand timeCommandReference, String facilityId, User user){
+
+        Reservation reservation = new Reservation();
+        reservation.setFacilityId(facilityId);
+        reservation.setDateAndTime(timeCommandReference.time);
+        reservation.setStatus(INTHECART);
+        reservation.setUser(user);
+        reservationRepository.save(reservation);
+        return reservation;
+    }
+
+    @Override
+    public Set<ReservationCommand> getReservation(String facilityId){
+        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
+        Set<ReservationCommand> reservationCommands = creatReservationCommandList(facilityId);
 
         for(Reservation reservation : reservations) {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
                     if (timeCommand.time.equals(reservation.getDateAndTime())) {
-                        timeCommand.setStatus(ReservationStatus.RESERVED);
+                        timeCommand.setStatus(RESERVED);
                     }
                 }
             }
@@ -96,34 +116,24 @@ public class ReservationServiceImp implements ReservationService {
     }
 
     @Override
-    public Set<ReservationCommand> setReservationToCart(TimeCommand timeCommandReference,String facilityId) {
+    public Set<ReservationCommand> setReservationToCart(TimeCommand timeCommandReference,String facilityId,
+                                                        User user) {
 
-        Reservation reservation1 = new Reservation();
-        reservation1.setFacilityId(facilityId);
-        reservation1.setDateAndTime(timeCommandReference.time);
-        reservationRepository.save(reservation1);
+        creatReservationObject(timeCommandReference, facilityId, user);
 
-        Set<ReservationCommand> reservationCommands = new LinkedHashSet<>();
         Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
-        Set<DayCommand> dayCommandSet = getDayOfWeek();
+        Set<ReservationCommand> reservationCommands = creatReservationCommandList(facilityId);
 
-        for (DayCommand dayCommand : dayCommandSet){
-
-            ReservationCommand reservationCommand = new ReservationCommand();
-            reservationCommand.setDayCommand(dayCommand);
-            reservationCommands.add(reservationCommand);
-
-        }
-
-        for(Reservation reservation : reservations) {
+        for(Reservation reservationObj : reservations) {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
-                    if (timeCommand.time.equals(reservation.getDateAndTime())) {
-                        timeCommand.setStatus(ReservationStatus.INTHECART);
+                    if (timeCommand.time.equals(reservationObj.getDateAndTime())) {
+                        timeCommand.setStatus(INTHECART);
                     }
                 }
             }
         }
         return reservationCommands;
     }
+
 }
