@@ -2,6 +2,7 @@ package com.onrcnk.citysports.controllers;
 
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
+import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.domain.User;
 import com.onrcnk.citysports.services.ReservationService;
 import com.onrcnk.citysports.services.UserService;
@@ -47,6 +48,16 @@ public class ReservationController {
 
         return "/reservation/reservationpage";
 
+    }
+
+    @RequestMapping("/cart")
+    public String getCartPage(Principal principal, Model model){
+
+        User user = userService.findByEmail(principal.getName());
+        Set<Reservation> reservationSet = reservationService.getReservationsOfUser(user);
+        model.addAttribute("reservations", reservationSet);
+
+        return "/reservation/cartpage";
     }
 
 }

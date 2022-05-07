@@ -6,7 +6,6 @@ import com.onrcnk.citysports.commands.TimeCommand;
 import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.domain.ReservationStatus;
 import com.onrcnk.citysports.domain.User;
-import com.onrcnk.citysports.repositories.CartRepository;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.ReservationRepository;
 import com.onrcnk.citysports.services.ReservationService;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -29,14 +27,12 @@ import static com.onrcnk.citysports.domain.ReservationStatus.RESERVED;
 public class ReservationServiceImp implements ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final CartRepository cartRepository;
     private final FacilityRepository facilityRepository;
     public static int RESERVATION_START_TIME = 8;
     public static int RESERVATION_END_TIME = 18;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, CartRepository cartRepository, FacilityRepository facilityRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, FacilityRepository facilityRepository) {
         this.reservationRepository = reservationRepository;
-        this.cartRepository = cartRepository;
         this.facilityRepository = facilityRepository;
     }
 
@@ -90,7 +86,7 @@ public class ReservationServiceImp implements ReservationService {
     public Reservation creatReservationObject(@NotNull TimeCommand timeCommandReference, String facilityId, User user){
 
         Reservation reservation = new Reservation();
-        reservation.setFacilityId(facilityId);
+        reservation.setFacility(facilityRepository.findByFacilityId(facilityId));
         reservation.setDateAndTime(timeCommandReference.time);
         reservation.setStatus(INTHECART);
         reservation.setUser(user);
@@ -100,7 +96,7 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public Set<ReservationCommand> getReservation(String facilityId){
-        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
+        Set<Reservation> reservations = reservationRepository.findByFacility(facilityRepository.findByFacilityId(facilityId));
         Set<ReservationCommand> reservationCommands = creatReservationCommandList(facilityId);
 
         for(Reservation reservation : reservations) {
@@ -121,7 +117,7 @@ public class ReservationServiceImp implements ReservationService {
 
         creatReservationObject(timeCommandReference, facilityId, user);
 
-        Set<Reservation> reservations = reservationRepository.findByFacilityId(facilityId);
+        Set<Reservation> reservations = reservationRepository.findByFacility(facilityRepository.findByFacilityId(facilityId));
         Set<ReservationCommand> reservationCommands = creatReservationCommandList(facilityId);
 
         for(Reservation reservationObj : reservations) {
@@ -134,6 +130,12 @@ public class ReservationServiceImp implements ReservationService {
             }
         }
         return reservationCommands;
+    }
+
+    @Override
+    public Set<Reservation> getReservationsOfUser(User user){
+        return reservationRepository.findByUserAndStatus(user, INTHECART);
+
     }
 
 }
