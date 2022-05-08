@@ -35,7 +35,7 @@ public class ReservationController {
         Set<ReservationCommand> reservationCommands = reservationService.getReservation(facilityId);
         model.addAttribute("reservations",reservationCommands);
 
-        return "/reservationpage";
+        return "reservation/reservationpage";
     }
 
     @PostMapping("/reservation/{facilityId}")
@@ -46,7 +46,7 @@ public class ReservationController {
         Set<ReservationCommand> reservationCommands = reservationService.setReservationToCart(timeCommand, facilityId, user);
         model.addAttribute("reservations",reservationCommands);
 
-        return "/reservationpage";
+        return "reservation/reservationpage";
 
     }
 
@@ -57,7 +57,7 @@ public class ReservationController {
         Set<Reservation> reservationSet = reservationService.getCartOfUser(user);
         model.addAttribute("reservations", reservationSet);
 
-        return "/reservation/cartpage";
+        return "reservation/cartpage";
     }
 
     @RequestMapping("/makeareservation")
@@ -66,7 +66,7 @@ public class ReservationController {
         User user = userService.findByEmail(principal.getName());
         reservationService.setReservation(user);
 
-        return "/reservation/reservationsuccess";
+        return "reservation/reservationsuccess";
     }
 
 }
