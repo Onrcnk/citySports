@@ -35,7 +35,7 @@ public class ReservationController {
         Set<ReservationCommand> reservationCommands = reservationService.getReservation(facilityId);
         model.addAttribute("reservations",reservationCommands);
 
-        return "reservation/reservationpage";
+        return "/reservationpage";
     }
 
     @PostMapping("/reservation/{facilityId}")
@@ -46,7 +46,7 @@ public class ReservationController {
         Set<ReservationCommand> reservationCommands = reservationService.setReservationToCart(timeCommand, facilityId, user);
         model.addAttribute("reservations",reservationCommands);
 
-        return "/reservation/reservationpage";
+        return "/reservationpage";
 
     }
 
