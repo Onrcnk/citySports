@@ -54,10 +54,19 @@ public class ReservationController {
     public String getCartPage(Principal principal, Model model){
 
         User user = userService.findByEmail(principal.getName());
-        Set<Reservation> reservationSet = reservationService.getReservationsOfUser(user);
+        Set<Reservation> reservationSet = reservationService.getCartOfUser(user);
         model.addAttribute("reservations", reservationSet);
 
         return "/reservation/cartpage";
+    }
+
+    @RequestMapping("/makeareservation")
+    public String getItemsCartToReservationStatus(Principal principal){
+
+        User user = userService.findByEmail(principal.getName());
+        reservationService.setReservation(user);
+
+        return "/reservation/reservationsuccess";
     }
 
 }

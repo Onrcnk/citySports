@@ -7,7 +7,7 @@ public enum ReservationStatus {
     RESERVE( "RESERVE"),
     RESERVED( "RESERVED"),
     INTHECART("CARTED"),
-    UNAVAILABLE("UNAVAILABLE"),
+    TIMEOUT("TIMEOUT"),
     ;
 
     private String description;

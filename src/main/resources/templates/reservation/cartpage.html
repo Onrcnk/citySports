@@ -68,12 +68,13 @@
         </tr>
         </tbody>
         <tfoot>
-        <tr>
+        <tr >
             <th scope="row" colspan="2">Total</th>
-            <td>30 para</td>
+            <td th:text="${reservations.size()}*20 + ' $'">30 para</td>
         </tr>
         </tfoot>
     </table>
+        <a type="button" style="margin-left: 1287px" class="btn btn-primary" th:href="@{'/makeareservation'}">Make a Reservation</a>
     </div>
 </div>
 

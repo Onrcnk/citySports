@@ -51,6 +51,7 @@
 <p>&nbsp;</p>
 
 <div class="row">
+    <div class="col-1"></div>
 
     <div class="card" style="width: 18rem; line-height: 2.3rem">
         <div class="card-header">
@@ -82,7 +83,7 @@
                     <li class="list-group-item text-center">
                         <span th:switch="${timeCommand.status.getDescription()}">
                             <button th:case="RESERVE" type="submit" class="btn btn-success" th:text="${timeCommand.status.getDescription()}">Reservation</button>
-                            <button th:case="UNAVAILABLE" type="button" class="btn btn-secondary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Unavailable</button>
+                            <button th:case="TIMEOUT" type="button" class="btn btn-secondary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">TIMEOUT</button>
                             <button th:case="RESERVED" type="button" class="btn btn-danger" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">Reserved</button>
                             <button th:case="CARTED" type="button" class="btn btn-primary" disabled data-bs-toggle="button" th:text="${timeCommand.status.getDescription()}">In The Cart</button>
                         </span>
@@ -94,9 +95,6 @@
     </div>
     </tr>
 </div>
-
-
-
 
 </body>
 </html>

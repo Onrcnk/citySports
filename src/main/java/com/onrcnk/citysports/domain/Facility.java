@@ -40,4 +40,7 @@ public class Facility {
     @OneToMany
     private Set<Reservation> reservationSet = new HashSet<>();
 
+    //todo: add image
+    private Byte image;
+
 }
