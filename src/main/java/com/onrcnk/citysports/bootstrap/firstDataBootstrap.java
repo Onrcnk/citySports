@@ -12,6 +12,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 @Component
 public class firstDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -88,29 +95,40 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         istanbul.setSportCenterName("Istanbul Sports Center");
         samsun.setSportCenterName("Samsun Sports Center");
 
+        //todo: add Image
+
+
         footballField.setFacilityName("Istanbul Football Field");
         footballField.setSportsCenter(istanbul);
+        //footballField.setImage(football_image);
 
         boxingRing.setFacilityName("Samsun Boxing Ring");
         boxingRing.setSportsCenter(samsun);
+        //boxingRing.setImage(boxing_image);
 
         tennisCourt.setFacilityName("Istanbul Tennis Court");
         tennisCourt.setSportsCenter(istanbul);
+        //tennisCourt.setImage(tennis_image);
 
         multiFunctionalFacility.setFacilityName("Istanbul Basketball and Volleyball Field");
         multiFunctionalFacility.setSportsCenter(istanbul);
+        //multiFunctionalFacility.setImage(basket_image);
 
         multiFunctionalFacility2.setFacilityName("Izmir Volleyball and Football Field");
         multiFunctionalFacility2.setSportsCenter(izmir);
+        //multiFunctionalFacility2.setImage(volleyball_image);
 
         footballField2.setFacilityName("Samsun Football Field");
         footballField2.setSportsCenter(samsun);
+        //footballField2.setImage(football_image);
 
         tennisCourt2.setFacilityName("Izmir Tennis Court");
         tennisCourt2.setSportsCenter(izmir);
+        //tennisCourt2.setImage(tennis_image);
 
         tennisCourt3.setFacilityName("Izmır Tennis Court - 2");
         tennisCourt3.setSportsCenter(izmir);
+        //tennisCourt3.setImage(tennis_image);
 
         sportCenterRepository.save(izmir);
         sportCenterRepository.save(istanbul);

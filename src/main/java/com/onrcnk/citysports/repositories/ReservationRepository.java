@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
-    Set<Reservation> findByFacilityId(String facilityId);
     Set<Reservation> findByUserAndStatus(User user, ReservationStatus reservationStatus);
     Set<Reservation> findByFacility(Facility facility);
+    Reservation findByDateTimeAndFacility(String dateAndTime, Facility facility);
 }

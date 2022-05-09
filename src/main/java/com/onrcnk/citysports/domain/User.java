@@ -34,16 +34,8 @@ public class User{
     @Column(unique = true)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Comment> comments = new HashSet<>();
-
-    @OneToMany
-    private Set<Cart> cartSet = new HashSet<>();
-
     @OneToMany
     private Set<Reservation> reservationSet = new HashSet<>();
 
-    @OneToMany
-    private Set<FacilityScore> facilityScoreSet = new HashSet<>();
 
 }

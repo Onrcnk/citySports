@@ -1,7 +1,5 @@
 package com.onrcnk.citysports.commands;
 
-import com.onrcnk.citysports.domain.Cart;
-import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +13,6 @@ public class ReservationCommand {
     private String reservationId;
     private String facilityId;
     private User user;
-    private Set<Cart> cartSet;
     public DayCommand dayCommand;
 
 

@@ -3,6 +3,7 @@ package com.onrcnk.citysports.services.Imp;
 import com.onrcnk.citysports.commands.DayCommand;
 import com.onrcnk.citysports.commands.ReservationCommand;
 import com.onrcnk.citysports.commands.TimeCommand;
+import com.onrcnk.citysports.domain.Facility;
 import com.onrcnk.citysports.domain.Reservation;
 import com.onrcnk.citysports.domain.ReservationStatus;
 import com.onrcnk.citysports.domain.User;
@@ -85,14 +86,19 @@ public class ReservationServiceImp implements ReservationService {
     @Override
     public Reservation creatReservationObject(@NotNull TimeCommand timeCommandReference, String facilityId, User user){
 
-        //todo: reservationControl
-        Reservation reservation = new Reservation();
-        reservation.setFacility(facilityRepository.findByFacilityId(facilityId));
-        reservation.setDateAndTime(timeCommandReference.time);
-        reservation.setStatus(INTHECART);
-        reservation.setUser(user);
-        reservationRepository.save(reservation);
-        return reservation;
+        Facility facility = facilityRepository.findByFacilityId(facilityId);
+
+        if(reservationRepository.findByDateTimeAndFacility(timeCommandReference.time,facility) == null) {
+            Reservation reservation = new Reservation();
+            reservation.setFacility(facilityRepository.findByFacilityId(facilityId));
+            reservation.setDateTime(timeCommandReference.time);
+            reservation.setStatus(INTHECART);
+            reservation.setUser(user);
+            reservationRepository.save(reservation);
+            return reservation;
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -103,9 +109,9 @@ public class ReservationServiceImp implements ReservationService {
         for(Reservation reservationObj : reservations) {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
-                    if (timeCommand.time.equals(reservationObj.getDateAndTime()) && reservationObj.getStatus() == INTHECART) {
+                    if (timeCommand.time.equals(reservationObj.getDateTime()) && reservationObj.getStatus() == INTHECART) {
                         timeCommand.setStatus(INTHECART);
-                    }else if(timeCommand.time.equals(reservationObj.getDateAndTime()) && reservationObj.getStatus() == RESERVED) {
+                    }else if(timeCommand.time.equals(reservationObj.getDateTime()) && reservationObj.getStatus() == RESERVED) {
                         timeCommand.setStatus(RESERVED);
                     }
                 }
@@ -127,9 +133,9 @@ public class ReservationServiceImp implements ReservationService {
         for(Reservation reservationObj : reservations) {
             for (ReservationCommand reservationCommand : reservationCommands) {
                 for (TimeCommand timeCommand : reservationCommand.getDayCommand().timeCommand) {
-                    if (timeCommand.time.equals(reservationObj.getDateAndTime()) && reservationObj.getStatus() == INTHECART) {
+                    if (timeCommand.time.equals(reservationObj.getDateTime()) && reservationObj.getStatus() == INTHECART) {
                         timeCommand.setStatus(INTHECART);
-                    }else if(timeCommand.time.equals(reservationObj.getDateAndTime()) && reservationObj.getStatus() == RESERVED) {
+                    }else if(timeCommand.time.equals(reservationObj.getDateTime()) && reservationObj.getStatus() == RESERVED) {
                         timeCommand.setStatus(RESERVED);
                     }
                 }
