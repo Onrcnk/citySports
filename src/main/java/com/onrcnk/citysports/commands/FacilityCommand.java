@@ -9,5 +9,6 @@ public class FacilityCommand {
 
     private String facilityId;
     private String facilityName;
+    private String image;
 
 }

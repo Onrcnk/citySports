@@ -12,4 +12,5 @@ public class SportCenterCommand {
     private String branchId;
     private String facilityName;
     private String facilityNames = "";
+    private String image;
 }

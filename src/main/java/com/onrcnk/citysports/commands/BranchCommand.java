@@ -9,5 +9,6 @@ public class BranchCommand {
     private String branchId;
     private String branchName;
     private String sportCenterId;
+    private String image;
 
 }

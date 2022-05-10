@@ -34,6 +34,7 @@ public class Facility {
     @OneToMany
     private Set<Reservation> reservationSet = new HashSet<>();
 
-    private byte[] image;
+    @Lob
+    private String image;
 
 }

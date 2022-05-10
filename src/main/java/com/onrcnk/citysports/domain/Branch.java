@@ -37,4 +37,6 @@ public class Branch {
             inverseJoinColumns = @JoinColumn(name = "sportCenter_id"))
     private Set<SportCenter> sportCenterSet = new HashSet<>();
 
+    @Lob
+    private String image;
 }

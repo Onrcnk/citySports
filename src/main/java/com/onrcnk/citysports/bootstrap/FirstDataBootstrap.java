@@ -12,22 +12,19 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 @Component
-public class firstDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
+public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
     private final FacilityRepository facilityRepository;
     private final SportCenterRepository sportCenterRepository;
 
-    public firstDataBootstrap(UserRepository userRepository, BranchRepository branchRepository, FacilityRepository facilityRepository, SportCenterRepository sportsCenterRepository) {
+    public FirstDataBootstrap(UserRepository userRepository, BranchRepository branchRepository, FacilityRepository facilityRepository, SportCenterRepository sportsCenterRepository) {
         this.userRepository = userRepository;
         this.branchRepository = branchRepository;
         this.facilityRepository = facilityRepository;
@@ -37,12 +34,16 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if(userRepository.count()==0) {
-            setData();
+            try {
+                setData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
-    public void setData() {
+    public void setData() throws IOException {
 
         User oguz = new User();
         User burak = new User();
@@ -95,40 +96,71 @@ public class firstDataBootstrap implements ApplicationListener<ContextRefreshedE
         istanbul.setSportCenterName("Istanbul Sports Center");
         samsun.setSportCenterName("Samsun Sports Center");
 
-        //todo: add Image
+        InputStream in1 = FirstDataBootstrap.class.getResourceAsStream("/static/images/basket_court.jpg");
+        byte[] basket_image = in1.readAllBytes();
 
+        InputStream in2 = FirstDataBootstrap.class.getResourceAsStream("/static/images/boxing_ring.jpg");
+        byte[] boxing_image = in2.readAllBytes();
+
+        InputStream in3 = FirstDataBootstrap.class.getResourceAsStream("/static/images/football_field.jpg");
+        byte[] football_image = in3.readAllBytes();
+
+        InputStream in4 = FirstDataBootstrap.class.getResourceAsStream("/static/images/tennis_court.jpg");
+        byte[] tennis_image = in4.readAllBytes();
+
+        InputStream in5 = FirstDataBootstrap.class.getResourceAsStream("/static/images/volleyball_field.jpg");
+        byte[] volleyball_image = in5.readAllBytes();
+
+        InputStream in6 = FirstDataBootstrap.class.getResourceAsStream("/static/images/istanbul_sport_center.jpg");
+        byte[] istanbul_image = in6.readAllBytes();
+
+        InputStream in7 = FirstDataBootstrap.class.getResourceAsStream("/static/images/izmir_sport_center.jpg");
+        byte[] izmir_image = in7.readAllBytes();
+
+        InputStream in8 = FirstDataBootstrap.class.getResourceAsStream("/static/images/samsun_sport_center.jpg");
+        byte[] samsun_image = in8.readAllBytes();
+
+        istanbul.setImage(Base64.getEncoder().encodeToString(istanbul_image));
+        izmir.setImage(Base64.getEncoder().encodeToString(izmir_image));
+        samsun.setImage(Base64.getEncoder().encodeToString(samsun_image));
+
+        football.setImage(Base64.getEncoder().encodeToString(football_image));
+        boxing.setImage(Base64.getEncoder().encodeToString(boxing_image));
+        tennis.setImage(Base64.getEncoder().encodeToString(tennis_image));
+        volleyball.setImage(Base64.getEncoder().encodeToString(basket_image));
+        basketball.setImage(Base64.getEncoder().encodeToString(basket_image));
 
         footballField.setFacilityName("Istanbul Football Field");
         footballField.setSportsCenter(istanbul);
-        //footballField.setImage(football_image);
+        footballField.setImage(Base64.getEncoder().encodeToString(football_image));
 
         boxingRing.setFacilityName("Samsun Boxing Ring");
         boxingRing.setSportsCenter(samsun);
-        //boxingRing.setImage(boxing_image);
+        boxingRing.setImage(Base64.getEncoder().encodeToString(boxing_image));
 
         tennisCourt.setFacilityName("Istanbul Tennis Court");
         tennisCourt.setSportsCenter(istanbul);
-        //tennisCourt.setImage(tennis_image);
+        tennisCourt.setImage(Base64.getEncoder().encodeToString(tennis_image));
 
         multiFunctionalFacility.setFacilityName("Istanbul Basketball and Volleyball Field");
         multiFunctionalFacility.setSportsCenter(istanbul);
-        //multiFunctionalFacility.setImage(basket_image);
+        multiFunctionalFacility.setImage(Base64.getEncoder().encodeToString(basket_image));
 
         multiFunctionalFacility2.setFacilityName("Izmir Volleyball and Football Field");
         multiFunctionalFacility2.setSportsCenter(izmir);
-        //multiFunctionalFacility2.setImage(volleyball_image);
+        multiFunctionalFacility2.setImage(Base64.getEncoder().encodeToString(volleyball_image));
 
         footballField2.setFacilityName("Samsun Football Field");
         footballField2.setSportsCenter(samsun);
-        //footballField2.setImage(football_image);
+        footballField2.setImage(Base64.getEncoder().encodeToString(football_image));
 
         tennisCourt2.setFacilityName("Izmir Tennis Court");
         tennisCourt2.setSportsCenter(izmir);
-        //tennisCourt2.setImage(tennis_image);
+        tennisCourt2.setImage(Base64.getEncoder().encodeToString(tennis_image));
 
         tennisCourt3.setFacilityName("Izmır Tennis Court - 2");
         tennisCourt3.setSportsCenter(izmir);
-        //tennisCourt3.setImage(tennis_image);
+        tennisCourt3.setImage(Base64.getEncoder().encodeToString(tennis_image));
 
         sportCenterRepository.save(izmir);
         sportCenterRepository.save(istanbul);

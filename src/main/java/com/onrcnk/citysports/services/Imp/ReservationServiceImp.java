@@ -32,7 +32,8 @@ public class ReservationServiceImp implements ReservationService {
     public static int RESERVATION_START_TIME = 8;
     public static int RESERVATION_END_TIME = 18;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, FacilityRepository facilityRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository,
+                                 FacilityRepository facilityRepository) {
         this.reservationRepository = reservationRepository;
         this.facilityRepository = facilityRepository;
     }
@@ -84,7 +85,8 @@ public class ReservationServiceImp implements ReservationService {
     }
 
     @Override
-    public Reservation creatReservationObject(@NotNull TimeCommand timeCommandReference, String facilityId, User user){
+    public Reservation creatReservationObject(@NotNull TimeCommand timeCommandReference,
+                                              String facilityId, User user){
 
         Facility facility = facilityRepository.findByFacilityId(facilityId);
 

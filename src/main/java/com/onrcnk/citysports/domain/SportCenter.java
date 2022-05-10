@@ -31,4 +31,7 @@ public class SportCenter {
     @ManyToMany(mappedBy = "sportCenterSet")
     private Set<Branch> branchSet;
 
+    @Lob
+    private String image;
+
 }
