@@ -15,4 +15,5 @@ public interface ReservationService {
     Reservation creatReservationObject(TimeCommand timeCommandReference, String facilityId, User user);
     Set<Reservation> getCartOfUser(User user);
     void setReservation(User user);
+    Set<Reservation> getUserReservation(User user);
 }

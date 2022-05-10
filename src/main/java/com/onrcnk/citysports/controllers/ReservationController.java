@@ -69,4 +69,14 @@ public class ReservationController {
         return "reservation/reservationsuccess";
     }
 
+    @RequestMapping("/myreservations")
+    public String getMyReservations(Principal principal, Model model){
+
+        User user = userService.findByEmail(principal.getName());
+        Set<Reservation> reservationSet = reservationService.getUserReservation(user);
+        model.addAttribute("reservations", reservationSet);
+
+        return "reservation/myreservationpage";
+    }
+
 }

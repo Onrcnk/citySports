@@ -1,9 +1,6 @@
 package com.onrcnk.citysports.bootstrap;
 
-import com.onrcnk.citysports.domain.Branch;
-import com.onrcnk.citysports.domain.Facility;
-import com.onrcnk.citysports.domain.SportCenter;
-import com.onrcnk.citysports.domain.User;
+import com.onrcnk.citysports.domain.*;
 import com.onrcnk.citysports.repositories.BranchRepository;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.SportCenterRepository;
@@ -15,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -123,6 +122,13 @@ public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedE
         istanbul.setImage(Base64.getEncoder().encodeToString(istanbul_image));
         izmir.setImage(Base64.getEncoder().encodeToString(izmir_image));
         samsun.setImage(Base64.getEncoder().encodeToString(samsun_image));
+
+        Set<Reservation> reservationSetOguz = new HashSet<>();
+        Set<Reservation> reservationSetBurak = new HashSet<>();
+        Set<Reservation> reservationSetOnurcan = new HashSet<>();
+        oguz.setReservationSet(reservationSetOguz);
+        burak.setReservationSet(reservationSetBurak);
+        onurcan.setReservationSet(reservationSetOnurcan);
 
         football.setImage(Base64.getEncoder().encodeToString(football_image));
         boxing.setImage(Base64.getEncoder().encodeToString(boxing_image));

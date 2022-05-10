@@ -12,11 +12,13 @@ import com.onrcnk.citysports.repositories.ReservationRepository;
 import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -96,6 +98,7 @@ public class ReservationServiceImp implements ReservationService {
             reservation.setDateTime(timeCommandReference.time);
             reservation.setStatus(INTHECART);
             reservation.setUser(user);
+            user.getReservationSet().add(reservation);
             reservationRepository.save(reservation);
             return reservation;
         }else{
@@ -160,5 +163,25 @@ public class ReservationServiceImp implements ReservationService {
             reservationRepository.save(reservation);
         }
     }
+
+    @Override
+    public Set<Reservation> getUserReservation(User user){
+
+        Set<Reservation> reservations = new HashSet<>();
+        Set<Reservation> reservationSet = user.getReservationSet();
+        Set<DayCommand> dayCommandSet = getDayOfWeek();
+        for(DayCommand dayCommand : dayCommandSet){
+            for(TimeCommand timeCommand :dayCommand.getTimeCommand()){
+                for(Reservation reservation : reservationSet){
+                    if(timeCommand.getTime().equals(reservation.getDateTime())){
+                        reservations.add(reservation);
+                    }
+                }
+            }
+        }
+
+        return reservations;
+    }
+
 
 }
