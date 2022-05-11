@@ -16,4 +16,5 @@ public interface ReservationService {
     Set<Reservation> getCartOfUser(User user);
     void setReservation(User user);
     Set<Reservation> getUserReservation(User user);
+    Set<Reservation> deleteUserReservation(User user, String reservationId);
 }

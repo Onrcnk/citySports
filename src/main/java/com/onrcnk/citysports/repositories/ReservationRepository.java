@@ -14,5 +14,7 @@ import java.util.Set;
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
     Set<Reservation> findByUserAndStatus(User user, ReservationStatus reservationStatus);
     Set<Reservation> findByFacility(Facility facility);
+    Reservation findByReservationId(String reservationId);
+    Set<Reservation> findByUser(User user);
     Reservation findByDateTimeAndFacility(String dateAndTime, Facility facility);
 }

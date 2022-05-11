@@ -9,10 +9,10 @@ import com.onrcnk.citysports.domain.ReservationStatus;
 import com.onrcnk.citysports.domain.User;
 import com.onrcnk.citysports.repositories.FacilityRepository;
 import com.onrcnk.citysports.repositories.ReservationRepository;
+import com.onrcnk.citysports.repositories.UserRepository;
 import com.onrcnk.citysports.services.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,13 +31,15 @@ public class ReservationServiceImp implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final FacilityRepository facilityRepository;
+    private final UserRepository userRepository;
     public static int RESERVATION_START_TIME = 8;
     public static int RESERVATION_END_TIME = 18;
 
     public ReservationServiceImp(ReservationRepository reservationRepository,
-                                 FacilityRepository facilityRepository) {
+                                 FacilityRepository facilityRepository, UserRepository userRepository) {
         this.reservationRepository = reservationRepository;
         this.facilityRepository = facilityRepository;
+        this.userRepository = userRepository;
     }
 
     public Set<DayCommand> getDayOfWeek(){
@@ -179,6 +181,18 @@ public class ReservationServiceImp implements ReservationService {
                 }
             }
         }
+
+        return reservations;
+    }
+
+    @Override
+    public Set<Reservation> deleteUserReservation(User user, String reservationId) {
+
+        Reservation reservation = reservationRepository.findByReservationId(reservationId);
+        user.getReservationSet().remove(reservation);
+        userRepository.save(user);
+        reservationRepository.delete(reservation);
+        Set<Reservation> reservations = getCartOfUser(user);
 
         return reservations;
     }

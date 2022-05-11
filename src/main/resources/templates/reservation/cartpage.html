@@ -61,6 +61,7 @@
             <th scope="col">Facility</th>
             <th scope="col">Date</th>
             <th scope="col">Price</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -68,12 +69,16 @@
             <td th:text="${reservation.facility.facilityName}"></td>
             <td th:text="${reservation.getDateTime()}"></td>
             <td>20 $</td>
+            <td>
+            <a type="button" class="btn btn-primary" th:href="@{'/deletereservation/' + ${reservation.reservationId}}">Delete</a>
+            </td>
         </tr>
         </tbody>
         <tfoot>
         <tr >
             <th scope="row" colspan="2">Total</th>
             <td th:text="${reservations.size()}*20 + ' $'">30 para</td>
+            <th scope="row" colspan="1"></th>
         </tr>
         </tfoot>
     </table>

@@ -19,16 +19,21 @@ public class UserController {
         this.userService = userService;
     }
 
+    @RequestMapping("/login")
+    public String getLoginPage(){
+        return "user/login";
+    }
+
     @RequestMapping("/register")
     public String getRegisterPage(Model model){
         model.addAttribute("user", new User());
-        return "/register";
+        return "user/register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("user/register")
     public String saveUser(@ModelAttribute User user){
         userService.saveUser(user);
-        return "/login";
+        return "user/login";
     }
 
     @RequestMapping("/logout")

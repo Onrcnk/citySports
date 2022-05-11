@@ -60,6 +60,17 @@ public class ReservationController {
         return "reservation/cartpage";
     }
 
+    @RequestMapping("/deletereservation/{reservationId}")
+    public String deleteReservation(Principal principal, @PathVariable String reservationId,
+                                    Model model){
+
+        User user = userService.findByEmail(principal.getName());
+        Set<Reservation> reservationSet = reservationService.deleteUserReservation(user, reservationId);
+        model.addAttribute("reservations", reservationSet);
+
+        return "reservation/cartpage";
+    }
+
     @RequestMapping("/makeareservation")
     public String getItemsCartToReservationStatus(Principal principal){
 
