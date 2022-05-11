@@ -47,6 +47,7 @@ public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedE
         User oguz = new User();
         User burak = new User();
         User onurcan = new User();
+        User dummy = new User();
 
         oguz.setName("Oğuz");
         oguz.setSurname("Direnç Dinç");
@@ -65,6 +66,12 @@ public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedE
         onurcan.setPassword("9090");
         onurcan.setEmail("kurt.onurcan@hotmail.com");
         onurcan.setRoles("USER");
+        
+        dummy.setName("Dummy");
+        dummy.setSurname("Dummy");
+        dummy.setPassword("1234");
+        dummy.setEmail("dummy@hotmail.com");
+        dummy.setRoles("USER");
 
         SportCenter izmir = new SportCenter();
         SportCenter istanbul = new SportCenter();
@@ -211,6 +218,7 @@ public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedE
         userRepository.save(oguz);
         userRepository.save(burak);
         userRepository.save(onurcan);
+        userRepository.save(dummy);
 
     }
 
