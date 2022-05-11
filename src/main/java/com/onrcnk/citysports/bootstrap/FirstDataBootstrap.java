@@ -113,7 +113,7 @@ public class FirstDataBootstrap implements ApplicationListener<ContextRefreshedE
         InputStream in6 = FirstDataBootstrap.class.getResourceAsStream("/static/images/istanbul_sport_center.jpg");
         byte[] istanbul_image = in6.readAllBytes();
 
-        InputStream in7 = FirstDataBootstrap.class.getResourceAsStream("/static/images/izmir_sport_center.jpg");
+        InputStream in7 = FirstDataBootstrap.class.getResourceAsStream("/static/images/istanbul_sport_center.jpg");
         byte[] izmir_image = in7.readAllBytes();
 
         InputStream in8 = FirstDataBootstrap.class.getResourceAsStream("/static/images/samsun_sport_center.jpg");
